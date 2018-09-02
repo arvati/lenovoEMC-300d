@@ -1,4 +1,4 @@
-# lenovoEMC-300d
+# LenovoEMC-300d
 OpenWrt driver packages for Iomega Lenovo EMC px4 or px6 300d devices
 
 ```bash
