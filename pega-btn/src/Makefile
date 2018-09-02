@@ -1,0 +1,1 @@
+obj-$(CONFIG_PEGA_NAS_BUTTON)	+= pega-btn.o

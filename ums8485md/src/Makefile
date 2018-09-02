@@ -1,0 +1,1 @@
+obj-$(CONFIG_LCD_UMS8485MD)	+= ums8485md.o

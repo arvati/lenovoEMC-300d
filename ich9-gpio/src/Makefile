@@ -1,0 +1,1 @@
+obj-$(CONFIG_GPIO_ICH9)		+= ich9-gpio.o

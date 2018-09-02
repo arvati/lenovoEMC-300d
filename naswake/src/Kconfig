@@ -1,0 +1,8 @@
+config NASWAKE
+	tristate "NAS Wake Function"
+	depends on GPIO_ICH9
+	help
+	  This driver is for NAS WOL function.
+
+
+

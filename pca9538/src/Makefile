@@ -1,0 +1,1 @@
+obj-$(CONFIG_GPIO_PCA9538)	+= pca9538.o

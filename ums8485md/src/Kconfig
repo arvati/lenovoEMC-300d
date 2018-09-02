@@ -1,0 +1,7 @@
+config LCD_UMS8485MD
+	tristate "UMS-8485MD-B Driver"
+	depends on GPIO_ICH9 && SENSORS_F71808E
+	default m
+	help
+	  If you have an UMS-8485MD-B LCD Module say Y to enable a driver
+	  for its LCD.
