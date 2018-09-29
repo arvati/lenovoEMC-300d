@@ -1,0 +1,1 @@
+obj-$(CONFIG_SENSORS_F75383)	+= f75383.o
