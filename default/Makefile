@@ -10,8 +10,8 @@ include $(INCLUDE_DIR)/package.mk
 
 # Package definition; instructs on how and where our package will appear in the overall configuration menu ('make menuconfig')
 define Package/lenovo
-    SECTION:=kernel
-    CATEGORY:=Kernel modules
+    SECTION:=firmware
+    CATEGORY:=Firmware
     SUBMENU:=LenovoEMC-300d Drivers
     TITLE:=LenovoEMC-300d default packages
     DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-scsi-core +kmod-ata-core +kmod-i2c-core +kmod-usb-core \

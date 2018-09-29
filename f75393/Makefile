@@ -15,7 +15,7 @@ PKG_LICENSE:=GPL-3.0
 include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/$(PKG_NAME)
-  SUBMENU:=lenovoEMC-300d Drivers
+  SUBMENU:=LenovoEMC-300d Drivers
   TITLE:=Fintek F75393 sensor
   DEPENDS:=@GPIO_SUPPORT @TARGET_x86 +kmod-hwmon-core +kmod-i2c-core
   FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).ko
