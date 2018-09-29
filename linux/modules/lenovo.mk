@@ -79,7 +79,7 @@ $(eval $(call KernelPackage,serio-i8042))
 
 
 I915_MODULES:= \
-  CONFIG_DRM_I915:drivers/gpu/drm/i915
+  CONFIG_DRM_I915:drivers/gpu/drm/i915/i915
 
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
