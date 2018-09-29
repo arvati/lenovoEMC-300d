@@ -1,4 +1,3 @@
-
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 #define UMS_DEBUG
 #undef UMS_DEBUG
@@ -17,8 +16,7 @@
 #include <linux/delay.h>
 #include <linux/font.h>
 #include <linux/miscdevice.h>
-#include "ich9-gpio.h"
-#include "f71808e.h"
+#include <linux/gpio.h>
 #include "ums8485md.h"
 #include "ilogo.h"
 
@@ -27,13 +25,12 @@
 #define STATIC_LCM_MINOR	1
 #define LCM_MINOR	128
 
-#define LCD_SI		      	(1 << 6)  /* GPIO 6 */
-#define LCD_SCL		      	(1 << 7)  /* GPIO 7 */
-#define SYS_REBUILD     	(1 << 12) /* GPIO 12 */
-#define SYS_HEALTH      	(1 << 13) /* GPIO 13 */
-#define LCD_RS		      	(1 << 16) /* GPIO 16 */
-#define LCD_A0		        (1 << 19) /* GPIO 19 */
-#define LCD_CS1		        (1 << 21) /* GPIO 21 */
+#define GPIO_BASE	451
+#define LCD_SI		(GPIO_BASE+6)
+#define LCD_SCL		(GPIO_BASE+7)
+#define LCD_RS		(GPIO_BASE+16)
+#define LCD_A0		(GPIO_BASE+19)
+#define LCD_CS1		(GPIO_BASE+21)
 
 enum lcm_a0_state {
 	LCM_CONTROL_DATA=0,
@@ -43,7 +40,7 @@ enum lcm_a0_state {
 long lcm_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
 
 static int lcm_initdata[] = { 0xa0, 0x2f, 0xa2, 0xc8, 0x27, 0x81, 0x17, 0xaf};
-static int lcm_standby[] = { 0xad, 0x02, 0xaf, 0xa5, 0xa4};
+//static int lcm_standby[] = { 0xad, 0x02, 0xaf, 0xa5, 0xa4};
 
 void lcm_delay(unsigned char delay)
 {
@@ -58,42 +55,42 @@ void lcm_delay(unsigned char delay)
 void scl_hi(void)
 {
 	lcm_delay(1);
-	set_ich9_gpio_attr(LCD_SCL, GP_LVL, 1);
+	gpio_set_value(LCD_SCL, 1);
 	lcm_delay(1);
 }
 
 void scl_lo(void)
 {
 	lcm_delay(1);
-	set_ich9_gpio_attr(LCD_SCL, GP_LVL, 0);
+	gpio_set_value(LCD_SCL, 0);
 	lcm_delay(1);
 }
 
 void si_hi(void)
 {
 	lcm_delay(1);
-	set_ich9_gpio_attr(LCD_SI, GP_LVL, 1);
+	gpio_set_value(LCD_SI, 1);
 	lcm_delay(1);
 }
 
 void si_lo(void)
 {
 	lcm_delay(1);
-	set_ich9_gpio_attr(LCD_SI, GP_LVL, 0);
+	gpio_set_value(LCD_SI, 0);
 	lcm_delay(1);
 }
 
 void cs_hi(void)
 {
 	lcm_delay(1);
-	set_ich9_gpio_attr(LCD_CS1, GP_LVL, 1);
+	gpio_set_value(LCD_CS1, 1);
 	lcm_delay(1);
 }
 
 void cs_lo(void)
 {
 	lcm_delay(1);
-	set_ich9_gpio_attr(LCD_CS1, GP_LVL, 0);
+	gpio_set_value(LCD_CS1, 0);
 	lcm_delay(1);
 }
 
@@ -109,11 +106,11 @@ void write_lcm_data(int type, unsigned char data) {
 	cs_lo();
 	if(type) { //display data
 		lcm_delay(1);
-		set_ich9_gpio_attr(LCD_A0, GP_LVL, LCM_DISPLAY_DATA); /* display data */
+		gpio_set_value(LCD_A0, LCM_DISPLAY_DATA); /* display data */
 		lcm_delay(1);
 	} else { //control data
 		lcm_delay(1);
-		set_ich9_gpio_attr(LCD_A0, GP_LVL, LCM_CONTROL_DATA); /* control data */
+		gpio_set_value(LCD_A0, LCM_CONTROL_DATA); /* control data */
 		lcm_delay(1);
 	}
 
@@ -141,7 +138,8 @@ void reload_logo(void)
 		write_lcm_data(LCM_CONTROL_DATA, (0xb0 + i));
 
 		for(j = 0; j < 128; j++) {
-			write_lcm_data(LCM_DISPLAY_DATA, ilogo[j+128*i]);
+			write_lcm_data(LCM_DISPLAY_DATA, (j%8==0));
+//			write_lcm_data(LCM_DISPLAY_DATA, ilogo[j+128*i]);
 		}
 	}
 }
@@ -281,26 +279,35 @@ static struct miscdevice lcm_dev = {
 	"lcm",
 	&lcm_fops,
 };
+
 static int lcm_gpio_init(void)
 {
 
-	int i;
-	u32 all_lcm_pin = 0;
+	int i, ret;
+	char name[5];
+	u32 all_lcm_pin[5] = {LCD_SI, LCD_SCL, LCD_RS, LCD_A0, LCD_CS1};
+        for (i=0; i<5; i++) {
+		sprintf(name, "lcm%d", i);
+		// register, turn off
+		ret = gpio_request_one(all_lcm_pin[i], GPIOF_OUT_INIT_LOW, name);
+
+		if (ret) {
+			printk(KERN_ERR "/dev/lcm Unable to request GPIO %d: %d\n", all_lcm_pin[i], ret);
+			return ret;
+		}
+	}
 
 	/* Initial LCM GPIO pin */
-	all_lcm_pin |= (LCD_SI | LCD_SCL | LCD_A0 | LCD_RS | LCD_CS1\
-			| HDD_LED);
-
-	set_ich9_gpio_attr(all_lcm_pin, GPIO_USE_SEL, 1);
-	set_ich9_gpio_attr(all_lcm_pin, GP_IO_SEL, 0);
-	set_ich9_gpio_attr(all_lcm_pin, GP_LVL, 0);
-	set_ich9_gpio_attr(all_lcm_pin, GPO_BLINK, 0);
-	set_ich9_gpio_attr(LCD_RS, GP_LVL, 0);
+	gpio_set_value(LCD_SI, 0);
+	gpio_set_value(LCD_SCL, 0);
+	gpio_set_value(LCD_A0, 0);
+	gpio_set_value(LCD_RS, 0);
+	gpio_set_value(LCD_CS1, 0);
 	mdelay(200);
-	set_ich9_gpio_attr(LCD_RS, GP_LVL, 1);
+	gpio_set_value(LCD_RS, 1);
 	mdelay(200);
-	set_ich9_gpio_attr(LCD_CS1, GP_LVL, 1);
-	set_ich9_gpio_attr(LCD_SCL, GP_LVL, 1);
+	gpio_set_value(LCD_CS1, 1);
+	gpio_set_value(LCD_SCL, 1);
 
 	for (i = 0; i < ARRAY_SIZE(lcm_initdata); i++) {
 		write_lcm_data(LCM_CONTROL_DATA, lcm_initdata[i]);
@@ -320,14 +327,22 @@ static int __init lcm_init(void)
 		return ret;
 	}
 	lcm_gpio_init();
-	pr_info("lcm driver is register.\n");
+	pr_info("lcm driver is registered.\n");
 
 	return ret;
 
 }
 static void __exit lcm_exit(void)
 {
+	int i;
+	u32 all_lcm_pin[5] = {LCD_SI, LCD_SCL, LCD_RS, LCD_A0, LCD_CS1};
+
 	misc_deregister(&lcm_dev);
+	for (i=0; i<5; i++) {
+		// deregister
+		gpio_free(all_lcm_pin[i]);
+	}
+
 }
 
 MODULE_DESCRIPTION ("LCM Driver");
@@ -335,4 +350,3 @@ MODULE_LICENSE("GPL");
 
 module_init(lcm_init);
 module_exit(lcm_exit);
-

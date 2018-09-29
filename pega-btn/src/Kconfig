@@ -1,6 +1,6 @@
 config PEGA_NAS_BUTTON
 	tristate "Button Driver for NAS system "
-	depends on GPIO_ICH9
+	depends on GPIO_ICH
 	default m
 	help
 	  Enable this driver to support button.

@@ -1,4 +1,0 @@
-config GPIO_ICH9
-	tristate "Intel ICH9R GPIO"
-	help
-	  GPIO Driver for Intel ICH9R.

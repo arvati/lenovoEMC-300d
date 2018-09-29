@@ -14,7 +14,6 @@
 #include <linux/types.h>
 #include <linux/uaccess.h>
 #include <linux/miscdevice.h>
-#include "ich9-gpio.h"
 #include <asm-generic/rtc.h>
 #include "naswake.h"
 

@@ -31,3 +31,4 @@ typedef struct lcm_member_s {
 #define	IOCTL_DISPLAY_READ		_IOWR(0xF4, 2, lcm_member_t)
 
 #endif
+

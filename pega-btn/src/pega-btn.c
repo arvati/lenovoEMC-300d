@@ -17,7 +17,6 @@
 #include <linux/proc_fs.h>
 #include <linux/delay.h>
 #include <linux/miscdevice.h>
-#include "ich9-gpio.h"
 #include <acpi/acpi.h>
 #include "pega-btn.h"
 
