@@ -12,7 +12,8 @@ include $(INCLUDE_DIR)/package.mk
 define Package/lenovo
     SECTION:=kernel
     CATEGORY:=Kernel modules
-    TITLE:=enovoEMC-300d default packages
+    SUBMENU:=LenovoEMC-300d Drivers
+    TITLE:=LenovoEMC-300d default packages
     DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-scsi-core +kmod-ata-core +kmod-i2c-core +kmod-usb-core \
     +kmod-ata-ahci +kmod-ata-ahci-platform +kmod-ata-piix +kmod-scsi-generic +kmod-scsi-cdrom \
     +kmod-hwmon-core +kmod-hwmon-gpiofan +kmod-hwmon-pwmfan +kmod-i2c-i801 +kmod-i2c-smbus \

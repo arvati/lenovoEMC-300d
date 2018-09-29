@@ -1,5 +1,5 @@
 
-LENOVO_MENU:=lenovoEMC-300d Drivers
+LENOVO_MENU:=LenovoEMC-300d Drivers
 
 ModuleConfVar=$(word 1,$(subst :,$(space),$(1)))
 ModuleFullPath=$(LINUX_DIR)/$(word 2,$(subst :,$(space),$(1))).ko
