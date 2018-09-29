@@ -4,6 +4,8 @@ PKG_NAME:=lenovo
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
+
 include $(INCLUDE_DIR)/package.mk
 
 # Package definition; instructs on how and where our package will appear in the overall configuration menu ('make menuconfig')
@@ -29,6 +31,8 @@ define Package/lenovo/description
   Meta Package for LenovoEMC-300d default packages
 endef
 
+define Build/Configure
+endef
 
 define Build/Prepare
 endef
@@ -36,7 +40,8 @@ endef
 define Build/Compile
 endef
 
-define Package/helloworld/install
+define Package/lenovo/install
 endef
+
 
 $(eval $(call BuildPackage,lenovo))
