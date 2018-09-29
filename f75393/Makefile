@@ -17,7 +17,7 @@ include $(INCLUDE_DIR)/package.mk
 define KernelPackage/$(PKG_NAME)
   SUBMENU:=lenovoEMC-300d Drivers
   TITLE:=Fintek F75393 sensor
-  DEPENDS:=@GPIO_SUPPORT @TARGET_x86 +kmod-hwmon +kmod-i2c-core
+  DEPENDS:=@GPIO_SUPPORT @TARGET_x86 +kmod-hwmon-core +kmod-i2c-core
   FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).ko
   AUTOLOAD:=$(call AutoLoad,30,$(PKG_NAME),1)
   KCONFIG:=

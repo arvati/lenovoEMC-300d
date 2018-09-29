@@ -20,7 +20,7 @@ define Package/lenovo
     +kmod-gpio-button-hotplug +kmod-i2c-gpio-custom +kmod-parport-pc +kmod-serial-8250 \
     +kmod-regmap +kmod-ikconfig +kmod-zram +kmod-random-core +kmod-thermal +kmod-itco-wdt \
     +kmod-pcspkr +kmod-sound-dummy +kmod-sound-hda-intel +kmod-usb-uhci +kmod-usb2-pci \
-    +kmod-usb3 +kmod-usb-audio u+kmod-sb-printer +kmod-usb-serial-ch341 +kmod-usb-serial-ftdi \
+    +kmod-usb3 +kmod-usb-audio +kmod-usb-printer +kmod-usb-serial-ch341 +kmod-usb-serial-ftdi \
     +kmod-usb-serial-pl2303 +kmod-usb-serial-cp210x +kmod-usb-storage +kmod-usb-storage-uas \
     +kmod-usb-hid +kmod-backlight-pwm +kmod-fb +kmod-drm +kmod-video-core +kmod-kvm-intel
 endef
