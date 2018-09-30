@@ -14,7 +14,7 @@
 #include <linux/types.h>
 #include <linux/uaccess.h>
 #include <linux/miscdevice.h>
-#include <asm-generic/rtc.h>
+#include <linux/mc146818rtc.h>
 #include "naswake.h"
 
 #define DEVICE_NAME 	"naswake"
