@@ -30,14 +30,14 @@ long naswake_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 
 	switch(cmd) {
 		case WAKEONLAN_EN :
-			pm_reg_write16(PM1_EN, \
-				(pm_reg_read16(PM1_EN) & ~(1 << 14)));
+			irq_reg_writel(PM1_EN, \
+				(irq_reg_readl(PM1_EN) & ~(1 << 14)));
 			CMOS_WRITE(0x1, 0x58);
 			break;
 
 		case WAKEONLAN_DE :
-			pm_reg_write16(PM1_EN, \
-				(pm_reg_read16(PM1_EN) | (1 << 14)));
+			irq_reg_writel(PM1_EN, \
+				(irq_reg_readl(PM1_EN) | (1 << 14)));
 			CMOS_WRITE(0x0, 0x58);
 			break;
 
