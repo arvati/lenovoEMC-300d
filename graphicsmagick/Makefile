@@ -48,6 +48,16 @@ define Package/GraphicsMagick-jpeg/description
   GraphicsMagick JPEG module
 endef
 
+define Package/GraphicsMagick-bmp
+  $(call Package/GraphicsMagick/Default)
+  TITLE+= (bmp)
+  DEPENDS:=+GraphicsMagick
+endef
+
+define Package/GraphicsMagick-bmp/description
+  GraphicsMagick BMP module
+endef
+
 CONFIGURE_ARGS += \
 	  --with-modules \
 	  --enable-shared \
@@ -97,3 +107,4 @@ endef
 
 $(eval $(call BuildPackage,GraphicsMagick))
 $(eval $(call BuildPlugin,jpeg))
+$(eval $(call BuildPlugin,bmp))
