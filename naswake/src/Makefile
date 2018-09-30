@@ -1,1 +1,0 @@
-obj-$(CONFIG_NASWAKE)		+= naswake.o
