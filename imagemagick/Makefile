@@ -81,6 +81,15 @@ define Package/imagemagick-tiff/description
   imagemagick TIFF module
 endef
 
+define Package/imagemagick-bmp
+  $(call Package/imagemagick/Default)
+  TITLE+= (bmp)
+  DEPENDS:=+imagemagick
+endef
+
+define Package/imagemagick-bmp/description
+  imagemagick BMP module
+endef
 
 CONFIGURE_ARGS += \
 	--with-modules \
@@ -88,7 +97,6 @@ CONFIGURE_ARGS += \
 	--enable-static \
 	--without-pango \
 	--without-bzlib \
-	--without-lzma \
 	--without-rsvg \
 	--without-fftw \
 	--without-xml \
@@ -157,3 +165,4 @@ $(eval $(call BuildPackage,imagemagick-tools))
 $(eval $(call BuildPlugin,jpeg))
 $(eval $(call BuildPlugin,png))
 $(eval $(call BuildPlugin,tiff))
+$(eval $(call BuildPlugin,bmp))

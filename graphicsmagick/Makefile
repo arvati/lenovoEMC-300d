@@ -52,6 +52,7 @@ CONFIGURE_ARGS += \
 	  --with-modules \
 	  --enable-shared \
 	  --enable-static \
+	  --without-lzma \
 	  --without-xml \
 	  --without-x \
 
