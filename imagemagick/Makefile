@@ -88,13 +88,16 @@ CONFIGURE_ARGS += \
 	--enable-static \
 	--without-pango \
 	--without-bzlib \
-	--without-freetype \
-	--without-fontconfig \
+	--without-lzma \
 	--without-rsvg \
 	--without-fftw \
 	--without-xml \
 	--without-x \
 	--without-magick-plus-plus
+
+#	--without-freetype \
+#	--without-fontconfig \
+
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR) \
