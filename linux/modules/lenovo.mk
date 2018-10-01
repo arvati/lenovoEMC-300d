@@ -85,6 +85,22 @@ define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
   TITLE:=Intel 8xx/9xx/G3x/G4x/HD Graphics
   DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-drm
+  KCONFIG+= \
+        CONFIG_DRM_I915_ALPHA_SUPPORT=n \
+        CONFIG_DRM_I915_CAPTURE_ERROR=y \
+        CONFIG_DRM_I915_COMPRESS_ERROR=y \
+        CONFIG_DRM_I915_USERPTR=y \
+        CONFIG_DRM_I915_GVT=n \
+        CONFIG_DRM_I915_WERROR=n \
+        CONFIG_DRM_I915_DEBUG=n \
+        CONFIG_DRM_I915_SW_FENCE_DEBUG_OBJECTS=n \
+        CONFIG_DRM_I915_SW_FENCE_CHECK_DAG=n \
+        CONFIG_DRM_I915_SELFTEST=n \
+        CONFIG_DRM_I915_LOW_LEVEL_TRACEPOINTS=n \
+        CONFIG_DRM_I915_DEBUG_VBLANK_EVADE=n \
+        CONFIG_DRM_VMWGFX=n \
+        CONFIG_DRM_GMA500=n \
+        CONFIG_DRM_VIRTIO_GPU=n
 endef
 
 define KernelPackage/i915/description
