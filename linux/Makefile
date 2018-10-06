@@ -1,2 +1,1 @@
-
- include $(sort $(wildcard ./modules/*.mk))
+include $(sort $(wildcard ./modules/*.mk))
