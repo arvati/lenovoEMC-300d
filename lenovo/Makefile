@@ -6,14 +6,13 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=f75393
+PKG_NAME:=lenovo
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Ademar Arvati Filho <arvati@hotmail.com>
 PKG_LICENSE:=GPL-3.0
 
 include $(INCLUDE_DIR)/package.mk
-
 
 
 LENOVO_MENU:=LenovoEMC-300d Drivers
