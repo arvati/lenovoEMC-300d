@@ -201,7 +201,10 @@ define KernelPackage/tg3
   $(call lenovo_defaults,$(TIGON3_MODULES))
   TITLE:=Broadcom Tigon3 suppor
   KCONFIG+= \
-    CONFIG_NETWORK_PHY_TIMESTAMPING
+    CONFIG_NETWORK_PHY_TIMESTAMPING=y \
+    CONFIG_DP83640_PHY=n \
+    CONFIG_PTP_1588_CLOCK_KVM=y
+
   DEPENDS:=@TARGET_x86 @PCI_SUPPORT
 endef
 
@@ -214,6 +217,7 @@ $(eval $(call KernelPackage,tg3))
 
 AGP_INTEL_MODULES:= \
   CONFIG_AGP_INTEL:drivers/char/agp/intel-agp \
+  CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
   :drivers/char/agp/intel-gtt \
   :drivers/char/agp/agpgart \
   :drivers/char/agp/drm_agpsupport
@@ -223,7 +227,13 @@ define KernelPackage/intel-agp
   TITLE:=Intel 440LX/BX/GX, I8xx and E7x05 chipset support
   SUBMENU:=$(LENOVO_MENU)
   KCONFIG+= \
-	CONFIG_AGP
+	CONFIG_AGP \
+	CONFIG_AGP_AMD64=n \
+	CONFIG_AGP_SIS=n \
+	CONFIG_AGP_VIA=n \
+	CONFIG_FB_INTEL_DEBUG=n \
+	CONFIG_FB_INTEL_I2C=y
+
   DEPENDS:=@TARGET_x86
 endef
 
