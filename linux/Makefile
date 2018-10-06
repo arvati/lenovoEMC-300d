@@ -4,6 +4,7 @@ include $(INCLUDE_DIR)/kernel.mk
 PKG_NAME:=lenovo
 PKG_FLAGS:=hold
 PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/packages
+SCAN_DEPS=modules/*.mk $(TOPDIR)/target/linux/*/modules.mk $(TOPDIR)/include/netfilter.mk $(TOPDIR)/package/kernel/linux/modules/*.mk
 PKG_LICENSE:=GPL-2.0
 PKG_LICENSE_FILES:=
 
@@ -28,8 +29,6 @@ endef
 define Build/Compile
 endef
 
-define KernelPackage/depends
-endef
 
 CONFIG_PACKAGE_lenovo=y
 
