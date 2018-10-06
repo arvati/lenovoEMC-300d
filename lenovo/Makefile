@@ -7,13 +7,24 @@ include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
 PKG_NAME:=lenovo
-PKG_RELEASE:=1
+PKG_FLAGS:=hold
 
-PKG_MAINTAINER:=Ademar Arvati Filho <arvati@hotmail.com>
-PKG_LICENSE:=GPL-3.0
+PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/packages
+SCAN_DEPS=modules/*.mk $(TOPDIR)/target/linux/*/modules.mk $(TOPDIR)/include/netfilter.mk $(TOPDIR)/package/kernel/linux/modules/*.mk
+
+PKG_LICENSE:=GPL-2.0
+PKG_LICENSE_FILES:=
+
+export SHELL:=/bin/sh
+.ONESHELL:
+.SHELLFLAGS = -ec
 
 include $(INCLUDE_DIR)/package.mk
 
+ifeq ($(DUMP),)
+  STAMP_BUILT:=$(STAMP_BUILT)_$(shell $(SCRIPT_DIR)/kconfig.pl $(LINUX_DIR)/.config | mkhash md5)
+  -include $(LINUX_DIR)/.config
+endif
 
 LENOVO_MENU:=LenovoEMC-300d Drivers
 
@@ -29,6 +40,7 @@ define lenovo_defaults
   FILES:=$(call ModuleFiles,$(1))
   AUTOLOAD:=$(call ModuleAuto,$(2),$(1),$(3))
 endef
+
 
 LPC_ICH_MODULES:= \
   CONFIG_LPC_ICH:drivers/mfd/lpc_ich
@@ -226,7 +238,36 @@ endef
 
 $(eval $(call KernelPackage,tg3))
 
+define Build/Prepare
+endef
 
+define Build/Configure
+endef
 
 define Build/Compile
 endef
+
+define KernelPackage/depends
+endef
+
+CONFIG_PACKAGE_lenovo=y
+define Package/lenovo
+  SECTION:=sys
+  CATEGORY:=Kernel
+  DEFAULT:=y
+  TITLE:=Virtual Lenovo kernel package
+  SUBMENU:=$(LENOVO_MENU)
+  VERSION:=$(LINUX_VERSION)-$(LINUX_RELEASE)-$(LINUX_VERMAGIC)
+  URL:=http://www.kernel.org/
+  PKG_FLAGS:=nonshared
+endef
+
+define Package/lenovo/install
+  # nothing to do
+endef
+
+define Package/lenovo/extra_provides
+	sed -e 's,.*/,,' $(LINUX_DIR)/modules.builtin;
+endef
+
+$(eval $(if $(DUMP),,$(call BuildPackage,lenovo)))
