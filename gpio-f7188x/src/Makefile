@@ -1,1 +1,0 @@
-obj-$(CONFIG_GPIO_F7188X)	+= gpio-f7188x.o
