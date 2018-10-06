@@ -79,7 +79,8 @@ $(eval $(call KernelPackage,serio-i8042))
 
 
 I915_MODULES:= \
-  CONFIG_DRM_I915:drivers/gpu/drm/i915/i915
+  CONFIG_DRM_I915:drivers/gpu/drm/i915/i915 \
+  CONFIG_DRM_KMS_HELPER:drivers/gpu/drm/drm_kms_helper
 
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
@@ -142,3 +143,85 @@ define KernelPackage/f7188x-gpio/description
 endef
 
 $(eval $(call KernelPackage,f7188x-gpio))
+
+I2C_ALGOBIT_MODULES:= \
+  CONFIG_I2C_ALGOBIT:drivers/i2c/algos/i2c_algo_bit
+
+define KernelPackage/i2c_algo_bit
+  $(call lenovo_defaults,$(I2C_ALGOBIT_MODULES))
+  TITLE:=I2C bit-banging interfaces
+  DEPENDS:=@TARGET_x86 +kmod-i2c-core
+endef
+
+define KernelPackage/i2c_algo_bit/description
+ I2C bit-banging interfaces
+endef
+
+$(eval $(call KernelPackage,i2c_algo_bit))
+
+
+MICROCODE_MODULES:= \
+  CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode
+
+define KernelPackage/microcode
+  $(call lenovo_defaults,$(MICROCODE_MODULES))
+  TITLE:=CPU microcode loading support
+  DEPENDS:=@TARGET_x86 intel-microcode
+  KCONFIG+= \
+        CONFIG_MICROCODE_INTEL=y
+#CONFIG_CPU_SUP_INTEL=y CONFIG_PROCESSOR_SELECT CONFIG_EXPERT
+  FILES+= \
+    $(LINUX_DIR)/arch/x86/kernel/cpu/microcode/intel.ko \
+    $(LINUX_DIR)/arch/x86/kernel/cpu/microcode/core.ko \
+endef
+
+define KernelPackage/microcode/description
+ If you say Y here, you will be able to update the microcode on Intel and AMD processors. The Intel support is for the IA32 family, e.g. Pentium Pro, Pentium II, Pentium III, Pentium 4, Xeon etc. The AMD support is for families 0x10 and later. You will obviously need the actual microcode binary data itself which is not shipped with the Linux kernel.
+endef
+
+$(eval $(call KernelPackage,microcode))
+
+
+define KernelPackage/tg3
+  TITLE:=CONFIG_TIGON3
+  KCONFIG:= \
+    CONFIG_TIGON3 \
+    CONFIG_PPS \
+    CONFIG_PTP_1588_CLOCK \
+    CONFIG_NETWORK_PHY_TIMESTAMPING
+  FILES:= \
+	$(LINUX_DIR)/drivers/ptp/ptp.ko \
+	$(LINUX_DIR)/drivers/net/tg3.ko \
+	$(LINUX_DIR)/drivers/pps/pps_core.ko
+  DEPENDS:=@TARGET_x86 @PCI_SUPPORT
+endef
+
+define KernelPackage/tg3/description
+ This driver supports Broadcom Tigon3 based gigabit Ethernet cards and
+ The IEEE 1588 standard defines a method to precisely synchronize distributed clocks over Ethernet networks. The standard defines a Precision Time Protocol (PTP), which can be used to achieve synchronization within a few dozen microseconds. In addition, with the help of special hardware time stamping units, it can be possible to achieve synchronization to within a few hundred nanoseconds.
+endef
+
+$(eval $(call KernelPackage,tg3))
+
+define KernelPackage/intel-agp
+  TITLE:=Intel 440LX/BX/GX, I8xx and E7x05 chipset support
+  KCONFIG:= \
+	CONFIG_AGP_INTEL \
+	CONFIG_AGP
+  FILES:= \
+	$(LINUX_DIR)/drivers/char/agp/intel-agp.ko \
+	$(LINUX_DIR)/drivers/char/agp/intel-gtt.ko \
+	$(LINUX_DIR)/drivers/char/agp/agpgart.ko \
+	$(LINUX_DIR)/drivers/char/agp/drm_agpsupport.ko
+  DEPENDS:=@TARGET_x86
+endef
+
+define KernelPackage/intel-agp/description
+ Intel 440LX/BX/GX, I8xx and E7x05 chipset support
+endef
+
+$(eval $(call KernelPackage,intel-agp))
+
+
+# configure
+# e1000e usb-printer intel-microcode
