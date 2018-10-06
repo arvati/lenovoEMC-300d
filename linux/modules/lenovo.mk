@@ -182,18 +182,15 @@ endef
 $(eval $(call KernelPackage,microcode))
 
 TIGON3_MODULES:= \
-  CONFIG_TIGON3:drivers/net/tg3
+  CONFIG_TIGON3:drivers/net/tg3 \
+  CONFIG_PTP_1588_CLOCK:drivers/ptp/ptp \
+  CONFIG_PPS:drivers/pps/pps_core
 
 define KernelPackage/tg3
   $(call lenovo_defaults,$(TIGON3_MODULES))
   TITLE:=CONFIG_TIGON3
   KCONFIG+= \
-    CONFIG_PPS \
-    CONFIG_PTP_1588_CLOCK \
     CONFIG_NETWORK_PHY_TIMESTAMPING
-  FILES+= \
-	$(LINUX_DIR)/drivers/ptp/ptp.ko \
-	$(LINUX_DIR)/drivers/pps/pps_core.ko
   DEPENDS:=@TARGET_x86 @PCI_SUPPORT
 endef
 
