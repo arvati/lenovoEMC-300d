@@ -96,12 +96,18 @@ $(eval $(call KernelPackage,serio-i8042))
 
 I915_MODULES:= \
   CONFIG_DRM_I915:drivers/gpu/drm/i915/i915 \
-  CONFIG_DRM_KMS_HELPER:drivers/gpu/drm/drm_kms_helper
+  CONFIG_DRM_KMS_HELPER:drivers/gpu/drm/drm_kms_helper \
+  CONFIG_AGP_INTEL:drivers/char/agp/intel-agp \
+  CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
+  :drivers/char/agp/intel-gtt \
+  CONFIG_AGP:drivers/char/agp/agpgart \
+  :drivers/char/agp/drm_agpsupport \
+  CONFIG_DRM:drivers/gpu/drm
 
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
   TITLE:=Intel 8xx/9xx/G3x/G4x/HD Graphics
-  DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-drm +kmod-intel-agp
+  DEPENDS:=@PCI_SUPPORT @TARGET_x86
   KCONFIG+= \
         CONFIG_DRM_I915_ALPHA_SUPPORT=n \
         CONFIG_DRM_I915_CAPTURE_ERROR=y \
@@ -117,7 +123,12 @@ define KernelPackage/i915
         CONFIG_DRM_I915_DEBUG_VBLANK_EVADE=n \
         CONFIG_DRM_VMWGFX=n \
         CONFIG_DRM_GMA500=n \
-        CONFIG_DRM_VIRTIO_GPU=n
+        CONFIG_DRM_VIRTIO_GPU=n \
+	    CONFIG_AGP_AMD64=n \
+	    CONFIG_AGP_SIS=n \
+	    CONFIG_AGP_VIA=n \
+	    CONFIG_FB_INTEL_DEBUG=n \
+	    CONFIG_FB_INTEL_I2C=y
 endef
 
 define KernelPackage/i915/description
@@ -214,35 +225,6 @@ define KernelPackage/tg3/description
 endef
 
 $(eval $(call KernelPackage,tg3))
-
-AGP_INTEL_MODULES:= \
-  CONFIG_AGP_INTEL:drivers/char/agp/intel-agp \
-  CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
-  :drivers/char/agp/intel-gtt \
-  :drivers/char/agp/agpgart \
-  :drivers/char/agp/drm_agpsupport
-
-define KernelPackage/intel-agp
-  $(call lenovo_defaults,$(AGP_INTEL_MODULES))
-  TITLE:=Intel 440LX/BX/GX, I8xx and E7x05 chipset support
-  SUBMENU:=$(LENOVO_MENU)
-  KCONFIG+= \
-	CONFIG_AGP \
-	CONFIG_AGP_AMD64=n \
-	CONFIG_AGP_SIS=n \
-	CONFIG_AGP_VIA=n \
-	CONFIG_FB_INTEL_DEBUG=n \
-	CONFIG_FB_INTEL_I2C=y
-
-  DEPENDS:=@TARGET_x86
-endef
-
-define KernelPackage/intel-agp/description
- Intel 440LX/BX/GX, I8xx and E7x05 chipset support
-endef
-
-$(eval $(call KernelPackage,intel-agp))
-
 
 
 
