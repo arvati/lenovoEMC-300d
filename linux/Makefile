@@ -15,16 +15,6 @@ export SHELL:=/bin/sh
 
 include $(INCLUDE_DIR)/package.mk
 
-define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)
-endef
-
-define Build/Configure
-endef
-
-define Build/Compile
-endef
-
 CONFIG_PACKAGE_lenovo=y
 define Package/$(PKG_NAME)
   SECTION:=sys
@@ -34,14 +24,6 @@ define Package/$(PKG_NAME)
   VERSION:=$(LINUX_VERSION)-$(LINUX_RELEASE)-$(LINUX_VERMAGIC)
   URL:=http://www.kernel.org/
   PKG_FLAGS:=nonshared
-endef
-
-define Package/$(PKG_NAME)/install
-  # nothing to do
-endef
-
-define Package/$(PKG_NAME)/extra_provides
-	sed -e 's,.*/,,' $(LINUX_DIR)/modules.builtin;
 endef
 
 $(eval $(if $(DUMP),,$(call BuildPackage,$(PKG_NAME))))
