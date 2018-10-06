@@ -149,7 +149,7 @@ GPIO_F7188X_MODULES:= \
 
 define KernelPackage/f7188x-gpio
   $(call lenovo_defaults,$(GPIO_F7188X_MODULES))
-  TITLE:=F71869, F71869A, F71882FG, F71889F and F81866 GPIO support
+  TITLE:=F71869 F71869A F71882FG F71889F and F81866 GPIO support
   DEPENDS:=@TARGET_x86
 endef
 
@@ -199,7 +199,7 @@ TIGON3_MODULES:= \
 
 define KernelPackage/tg3
   $(call lenovo_defaults,$(TIGON3_MODULES))
-  TITLE:=CONFIG_TIGON3
+  TITLE:=Broadcom Tigon3 suppor
   KCONFIG+= \
     CONFIG_NETWORK_PHY_TIMESTAMPING
   DEPENDS:=@TARGET_x86 @PCI_SUPPORT
