@@ -159,18 +159,15 @@ endef
 $(eval $(call KernelPackage,i2c_algo_bit))
 
 MICROCODE_MODULES:= \
-  CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode
+  CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode \
+  CONFIG_MICROCODE_INTEL:arch/x86/kernel/cpu/microcode/intel \
+  :arch/x86/kernel/cpu/microcode/core
 
 define KernelPackage/microcode
   $(call lenovo_defaults,$(MICROCODE_MODULES))
   TITLE:=CPU microcode loading support
   DEPENDS:=@TARGET_x86 intel-microcode
-  KCONFIG+= \
-        CONFIG_MICROCODE_INTEL=y
 #CONFIG_CPU_SUP_INTEL=y CONFIG_PROCESSOR_SELECT CONFIG_EXPERT
-  FILES+= \
-    $(LINUX_DIR)/arch/x86/kernel/cpu/microcode/intel.ko \
-    $(LINUX_DIR)/arch/x86/kernel/cpu/microcode/core.ko \
 endef
 
 define KernelPackage/microcode/description
