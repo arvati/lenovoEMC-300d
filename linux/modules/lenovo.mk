@@ -131,7 +131,6 @@ $(eval $(call KernelPackage,rtc-cmos))
 GPIO_F7188X_MODULES:= \
   CONFIG_GPIO_F7188X:drivers/gpio/f7188x-gpio
 
-
 define KernelPackage/f7188x-gpio
   $(call lenovo_defaults,$(GPIO_F7188X_MODULES))
   TITLE:=F71869, F71869A, F71882FG, F71889F and F81866 GPIO support
@@ -158,7 +157,6 @@ define KernelPackage/i2c_algo_bit/description
 endef
 
 $(eval $(call KernelPackage,i2c_algo_bit))
-
 
 MICROCODE_MODULES:= \
   CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode
@@ -221,7 +219,3 @@ define KernelPackage/intel-agp/description
 endef
 
 $(eval $(call KernelPackage,intel-agp))
-
-
-# configure
-# e1000e usb-printer intel-microcode
