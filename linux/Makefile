@@ -1,9 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lenovo
-PKG_FLAGS:=hold
 
-PKG_BUILD_DIR:=$(KERNEL_BUILD_DIR)/packages
 PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
