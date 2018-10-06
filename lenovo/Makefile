@@ -101,7 +101,7 @@ I915_MODULES:= \
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
   TITLE:=Intel 8xx/9xx/G3x/G4x/HD Graphics
-  DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-drm
+  DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-drm +kmod-intel-agp
   KCONFIG+= \
         CONFIG_DRM_I915_ALPHA_SUPPORT=n \
         CONFIG_DRM_I915_CAPTURE_ERROR=y \

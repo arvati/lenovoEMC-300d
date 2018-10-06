@@ -41,7 +41,7 @@ endef
 define Package/GraphicsMagick-jpeg
   $(call Package/GraphicsMagick/Default)
   TITLE+= (jpeg)
-  DEPENDS:=+GraphicsMagick +libjpeg +zlib
+  DEPENDS:=+GraphicsMagick +libjpeg +zlib +liblzma
 endef
 
 define Package/GraphicsMagick-jpeg/description
@@ -62,7 +62,6 @@ CONFIGURE_ARGS += \
 	  --with-modules \
 	  --enable-shared \
 	  --enable-static \
-	  --without-lzma \
 	  --without-xml \
 	  --without-x \
 
