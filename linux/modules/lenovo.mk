@@ -181,17 +181,18 @@ endef
 
 $(eval $(call KernelPackage,microcode))
 
+TIGON3_MODULES:= \
+  CONFIG_TIGON3:drivers/net/tg3
 
 define KernelPackage/tg3
+  $(call lenovo_defaults,$(TIGON3_MODULES))
   TITLE:=CONFIG_TIGON3
-  KCONFIG:= \
-    CONFIG_TIGON3 \
+  KCONFIG+= \
     CONFIG_PPS \
     CONFIG_PTP_1588_CLOCK \
     CONFIG_NETWORK_PHY_TIMESTAMPING
-  FILES:= \
+  FILES+= \
 	$(LINUX_DIR)/drivers/ptp/ptp.ko \
-	$(LINUX_DIR)/drivers/net/tg3.ko \
 	$(LINUX_DIR)/drivers/pps/pps_core.ko
   DEPENDS:=@TARGET_x86 @PCI_SUPPORT
 endef
@@ -203,16 +204,18 @@ endef
 
 $(eval $(call KernelPackage,tg3))
 
+AGP_INTEL_MODULES:= \
+  CONFIG_AGP_INTEL:drivers/char/agp/intel-agp \
+  :drivers/char/agp/intel-gtt \
+  :drivers/char/agp/agpgart \
+  :drivers/char/agp/drm_agpsupport
+
 define KernelPackage/intel-agp
+  $(call lenovo_defaults,$(AGP_INTEL_MODULES))
   TITLE:=Intel 440LX/BX/GX, I8xx and E7x05 chipset support
-  KCONFIG:= \
-	CONFIG_AGP_INTEL \
+  SUBMENU:=$(LENOVO_MENU)
+  KCONFIG+= \
 	CONFIG_AGP
-  FILES:= \
-	$(LINUX_DIR)/drivers/char/agp/intel-agp.ko \
-	$(LINUX_DIR)/drivers/char/agp/intel-gtt.ko \
-	$(LINUX_DIR)/drivers/char/agp/agpgart.ko \
-	$(LINUX_DIR)/drivers/char/agp/drm_agpsupport.ko
   DEPENDS:=@TARGET_x86
 endef
 
