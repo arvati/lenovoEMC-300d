@@ -85,7 +85,7 @@ I915_MODULES:= \
   CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
   CONFIG_AGP_INTEL:drivers/char/agp/intel-gtt \
   CONFIG_AGP:drivers/char/agp/agpgart \
-  CONFIG_AGP:drivers/char/agp//ttm_agp_backend \
+  CONFIG_AGP:drivers/char/agp/ttm_agp_backend \
   CONFIG_DRM:drivers/gpu/drm/drm
 
 define KernelPackage/i915
