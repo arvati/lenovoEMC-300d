@@ -155,7 +155,7 @@ endef
 $(eval $(call KernelPackage,f7188x-gpio))
 
 I2C_ALGOBIT_MODULES:= \
-  CONFIG_I2C_ALGOBIT:drivers/i2c/algos/i2c_algo_bit
+  CONFIG_I2C_ALGOBIT:drivers/i2c/algos/i2c-algo-bit
 
 define KernelPackage/i2c_algo_bit
   $(call lenovo_defaults,$(I2C_ALGOBIT_MODULES))
