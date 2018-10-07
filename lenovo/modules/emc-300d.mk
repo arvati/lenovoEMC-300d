@@ -85,8 +85,8 @@ I915_MODULES:= \
   CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
   :drivers/char/agp/intel-gtt \
   CONFIG_AGP:drivers/char/agp/agpgart \
-  :drivers/char/agp/drm_agpsupport \
-  CONFIG_DRM:drivers/gpu/drm
+  :drivers/gpu/drm/drm_agpsupport \
+  CONFIG_DRM:drivers/gpu/drm/drm
 
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
