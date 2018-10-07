@@ -85,12 +85,14 @@ I915_MODULES:= \
   CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
   CONFIG_AGP_INTEL:drivers/char/agp/intel-gtt \
   CONFIG_AGP:drivers/char/agp/agpgart \
-  CONFIG_DRM:drivers/gpu/drm/drm
+  CONFIG_DRM:drivers/gpu/drm/drm \
+  CONFIG_ACPI_VIDEO:drivers/acpi/video \
+  CONFIG_BACKLIGHT_CLASS_DEVICE:drivers/video/backlight/backlight
 
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
   TITLE:=Intel 8xx/9xx/G3x/G4x/HD Graphics
-  DEPENDS:=@PCI_SUPPORT @DISPLAY_SUPPORT @TARGET_x86 +kmod-i2c_algo_bit +kmod-video-core
+  DEPENDS:=@PCI_SUPPORT @DISPLAY_SUPPORT @TARGET_x86 +kmod-i2c_algo_bit +kmod-video-core +kmod-input-core
   KCONFIG+= \
         CONFIG_DRM_I915_ALPHA_SUPPORT=n \
         CONFIG_DRM_I915_CAPTURE_ERROR=y \
