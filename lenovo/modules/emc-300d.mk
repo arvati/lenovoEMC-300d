@@ -83,15 +83,15 @@ I915_MODULES:= \
   CONFIG_DRM_KMS_HELPER:drivers/gpu/drm/drm_kms_helper \
   CONFIG_AGP_INTEL:drivers/char/agp/intel-agp \
   CONFIG_FB_INTEL:drivers/video/fbdev/intelfb/intelfb \
-  :drivers/char/agp/intel-gtt \
+  CONFIG_AGP_INTEL:drivers/char/agp/intel-gtt \
   CONFIG_AGP:drivers/char/agp/agpgart \
-  :drivers/gpu/drm/drm_agpsupport \
+  CONFIG_DRM:drivers/gpu/drm/drm_agpsupport \
   CONFIG_DRM:drivers/gpu/drm/drm
 
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
   TITLE:=Intel 8xx/9xx/G3x/G4x/HD Graphics
-  DEPENDS:=@PCI_SUPPORT @TARGET_x86
+  DEPENDS:=@PCI_SUPPORT @DISPLAY_SUPPORT @TARGET_x86 +kmod-i2c_algo_bit +kmod-video-core
   KCONFIG+= \
         CONFIG_DRM_I915_ALPHA_SUPPORT=n \
         CONFIG_DRM_I915_CAPTURE_ERROR=y \
@@ -172,7 +172,7 @@ $(eval $(call KernelPackage,i2c_algo_bit))
 MICROCODE_MODULES:= \
   CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode \
   CONFIG_MICROCODE_INTEL:arch/x86/kernel/cpu/microcode/intel \
-  :arch/x86/kernel/cpu/microcode/core
+  CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/core
 
 define KernelPackage/microcode
   $(call lenovo_defaults,$(MICROCODE_MODULES))
@@ -199,7 +199,6 @@ define KernelPackage/tg3
     CONFIG_NETWORK_PHY_TIMESTAMPING=y \
     CONFIG_DP83640_PHY=n \
     CONFIG_PTP_1588_CLOCK_KVM=y
-
   DEPENDS:=@TARGET_x86 @PCI_SUPPORT
 endef
 
