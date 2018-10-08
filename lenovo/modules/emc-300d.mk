@@ -123,15 +123,15 @@ endef
 $(eval $(call KernelPackage,i915))
 
 RTC_DRV_CMOS_MODULES:= \
-  CONFIG_RTC_DRV_CMOS:drivers/rtc/rtc-cmos \
-  CONFIG_RTC_LIB:drivers/rtc/rtc-lib \
-  CONFIG_RTC_CLASS:drivers/rtc/rtc-core
-
+  CONFIG_RTC_DRV_CMOS:drivers/rtc/rtc-cmos
 
 define KernelPackage/rtc-cmos
   $(call lenovo_defaults,$(RTC_DRV_CMOS_MODULES))
   TITLE:=PC-style CMOS real time clock
-  DEPENDS:=@TARGET_x86
+  DEPENDS:=@TARGET_x86 +kmod-i2c-core
+  DEFAULT:=m if ALL_KMODS && RTC_SUPPORT
+  KCONFIG+= \
+        CONFIG_RTC_CLASS=y
 endef
 
 define KernelPackage/rtc-cmos/description
