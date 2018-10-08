@@ -141,19 +141,19 @@ endef
 $(eval $(call KernelPackage,rtc-cmos))
 
 GPIO_F7188X_MODULES:= \
-  CONFIG_GPIO_F7188X:drivers/gpio/f7188x-gpio
+  CONFIG_GPIO_F7188X:drivers/gpio/gpio-f7188x
 
-define KernelPackage/f7188x-gpio
+define KernelPackage/gpio-f7188x
   $(call lenovo_defaults,$(GPIO_F7188X_MODULES))
   TITLE:=F71869 F71869A F71882FG F71889F and F81866 GPIO support
-  DEPENDS:=@TARGET_x86
+  DEPENDS:=@PCI_SUPPORT @GPIO_SUPPORT @TARGET_x86
 endef
 
-define KernelPackage/f7188x-gpio/description
+define KernelPackage/gpio-f7188x/description
  This option enables support for GPIOs found on Fintek Super-I/O chips F71869, F71869A, F71882FG, F71889F and F81866.
 endef
 
-$(eval $(call KernelPackage,f7188x-gpio))
+$(eval $(call KernelPackage,gpio-f7188x))
 
 I2C_ALGOBIT_MODULES:= \
   CONFIG_I2C_ALGOBIT:drivers/i2c/algos/i2c-algo-bit
