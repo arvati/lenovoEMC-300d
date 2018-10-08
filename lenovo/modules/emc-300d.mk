@@ -92,7 +92,7 @@ I915_MODULES:= \
 define KernelPackage/i915
   $(call lenovo_defaults,$(I915_MODULES))
   TITLE:=Intel 8xx/9xx/G3x/G4x/HD Graphics
-  DEPENDS:=@PCI_SUPPORT @DISPLAY_SUPPORT @TARGET_x86 +kmod-i2c_algo_bit +kmod-video-core +kmod-input-core
+  DEPENDS:=@PCI_SUPPORT @DISPLAY_SUPPORT @TARGET_x86 +kmod-i2c-algo-bit +kmod-video-core +kmod-input-core
   KCONFIG+= \
         CONFIG_DRM_I915_ALPHA_SUPPORT=n \
         CONFIG_DRM_I915_CAPTURE_ERROR=y \
@@ -155,21 +155,6 @@ endef
 
 $(eval $(call KernelPackage,gpio-f7188x))
 
-I2C_ALGOBIT_MODULES:= \
-  CONFIG_I2C_ALGOBIT:drivers/i2c/algos/i2c-algo-bit
-
-define KernelPackage/i2c_algo_bit
-  $(call lenovo_defaults,$(I2C_ALGOBIT_MODULES))
-  TITLE:=I2C bit-banging interfaces
-  DEPENDS:=@TARGET_x86 +kmod-i2c-core
-endef
-
-define KernelPackage/i2c_algo_bit/description
- I2C bit-banging interfaces
-endef
-
-$(eval $(call KernelPackage,i2c_algo_bit))
-
 MICROCODE_MODULES:= \
   CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode \
   CONFIG_MICROCODE_INTEL:arch/x86/kernel/cpu/microcode/intel \
@@ -189,9 +174,7 @@ endef
 $(eval $(call KernelPackage,microcode))
 
 TIGON3_MODULES:= \
-  CONFIG_TIGON3:drivers/net/ethernet/broadcom/tg3 \
-  CONFIG_PTP_1588_CLOCK:drivers/ptp/ptp \
-  CONFIG_PPS:drivers/pps/pps_core
+  CONFIG_TIGON3:drivers/net/ethernet/broadcom/tg3
 
 define KernelPackage/tg3
   $(call lenovo_defaults,$(TIGON3_MODULES))
@@ -200,7 +183,7 @@ define KernelPackage/tg3
     CONFIG_NETWORK_PHY_TIMESTAMPING=y \
     CONFIG_DP83640_PHY=n \
     CONFIG_PTP_1588_CLOCK_KVM=y
-  DEPENDS:=@TARGET_x86 @PCI_SUPPORT +kmod-libphy
+  DEPENDS:=@TARGET_x86 @PCI_SUPPORT +kmod-libphy +kmod-pps +kmod-ptp
 endef
 
 define KernelPackage/tg3/description
