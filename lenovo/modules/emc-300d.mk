@@ -189,13 +189,13 @@ endef
 $(eval $(call KernelPackage,microcode))
 
 TIGON3_MODULES:= \
-  CONFIG_TIGON3:drivers/net/tg3 \
+  CONFIG_TIGON3:drivers/net/ethernet/broadcom/tg3 \
   CONFIG_PTP_1588_CLOCK:drivers/ptp/ptp \
   CONFIG_PPS:drivers/pps/pps_core
 
 define KernelPackage/tg3
   $(call lenovo_defaults,$(TIGON3_MODULES))
-  TITLE:=Broadcom Tigon3 suppor
+  TITLE:=Broadcom Tigon3 support
   KCONFIG+= \
     CONFIG_NETWORK_PHY_TIMESTAMPING=y \
     CONFIG_DP83640_PHY=n \
