@@ -200,7 +200,7 @@ define KernelPackage/tg3
     CONFIG_NETWORK_PHY_TIMESTAMPING=y \
     CONFIG_DP83640_PHY=n \
     CONFIG_PTP_1588_CLOCK_KVM=y
-  DEPENDS:=@TARGET_x86 @PCI_SUPPORT
+  DEPENDS:=@TARGET_x86 @PCI_SUPPORT +kmod-libphy
 endef
 
 define KernelPackage/tg3/description
