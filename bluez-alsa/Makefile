@@ -8,16 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=bluez-alsa
-PKG_VERSION:=v1.3.1
+PKG_VERSION:=1.3.1
 PKG_RELEASE:=1.3.1
 PKG_MAINTAINER:=
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.txt
 
-PKG_SOURCE_URL:=https://codeload.github.com/Arkq/$(PKG_NAME)/tar.gz/9b72b96?dummy=/
+PKG_SOURCE_URL:=https://codeload.github.com/Arkq/$(PKG_NAME)/tar.gz/v$(PKG_VERSION)?
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-PKG_HASH:=39706805338572266e337eed94fb69114c881bbc4e5fb36eb0fc36a8304927d0
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-9b72b96
+PKG_HASH:=29dad23877d0cf46a16e2f8d3746219e89068c33d052059caf1caaacd8b40cac
 
 PKG_FIXUP:=autoreconf
 
