@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=bluez-alsa
 PKG_VERSION:=1.3.1
-PKG_RELEASE:=1.3.1
+PKG_RELEASE:=1
 PKG_MAINTAINER:=
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.txt
@@ -21,6 +21,7 @@ PKG_HASH:=29dad23877d0cf46a16e2f8d3746219e89068c33d052059caf1caaacd8b40cac
 PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
+
 
 define Package/bluez-alsa
   SECTION:=sound
