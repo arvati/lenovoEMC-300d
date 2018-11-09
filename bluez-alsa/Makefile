@@ -19,6 +19,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_HASH:=29dad23877d0cf46a16e2f8d3746219e89068c33d052059caf1caaacd8b40cac
 
 PKG_FIXUP:=autoreconf
+PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
@@ -26,7 +27,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/bluez-alsa
   SECTION:=sound
   CATEGORY:=Sound
-  DEPENDS:=+alsa-lib +bluez-daemon +glib2 +sbc +fdk-aac @LINUX_4_14
+  DEPENDS:=+alsa-lib +bluez-daemon +glib2 +sbc +fdk-aac +libbsd +ncurses @LINUX_4_14
   TITLE:=Bluetooth Audio ALSA backend
   URL:=https://github.com/Arkq/bluez-alsa
 endef
@@ -35,7 +36,7 @@ define Package/bluez-alsa/description
   ALSA plugin supporting Bluetooth audio
 endef
 
-CONFIGURE_ARGS += --enable-aac --disable-rfcomm
+CONFIGURE_ARGS += --enable-aac --enable-rfcomm --enable-hcitop
 
 define Package/bluez-alsa/install
 	$(INSTALL_DIR) $(1)/usr/share/alsa/alsa.conf.d/
