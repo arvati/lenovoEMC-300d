@@ -27,7 +27,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/bluez-alsa
   SECTION:=sound
   CATEGORY:=Sound
-  DEPENDS:=+alsa-lib +bluez-daemon +glib2 +sbc +fdk-aac +libbsd +ncurses @LINUX_4_14
+  DEPENDS:=+alsa-lib +bluez-daemon +glib2 +sbc +fdk-aac +readline +libbsd +ncurses @LINUX_4_14
   TITLE:=Bluetooth Audio ALSA backend
   URL:=https://github.com/Arkq/bluez-alsa
 endef
@@ -46,6 +46,7 @@ define Package/bluez-alsa/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/bluealsa $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/utils/bluealsa-aplay $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/utils/bluealsa-rfcomm $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/bluealsa.init $(1)/etc/init.d/bluealsa
 endef
