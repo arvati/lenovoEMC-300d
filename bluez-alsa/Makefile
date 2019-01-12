@@ -10,9 +10,7 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=bluez-alsa
 PKG_VERSION:=1.3.1
 PKG_RELEASE:=1
-PKG_MAINTAINER:=
 PKG_LICENSE:=MIT
-PKG_LICENSE_FILES:=LICENSE.txt
 
 PKG_SOURCE_URL:=https://codeload.github.com/Arkq/$(PKG_NAME)/tar.gz/v$(PKG_VERSION)?
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
