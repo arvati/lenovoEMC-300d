@@ -21,6 +21,7 @@ PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
+export PATH:=$(PKG_BUILD_DIR)/bin:$(TARGET_PATH)
 
 define Package/bluez-alsa
   SECTION:=sound
