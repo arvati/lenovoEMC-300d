@@ -26,8 +26,8 @@ export PATH:=$(PKG_BUILD_DIR)/bin:$(TARGET_PATH)
 define Package/bluez-alsa
   SECTION:=sound
   CATEGORY:=Sound
-  DEPENDS:=+alsa-lib +bluez-daemon +glib2 +sbc +fdk-aac
-# +libreadline +libbsd +libncurses
+  DEPENDS:=+alsa-lib +bluez-daemon +glib2 +sbc
+# +fdk-aac +libreadline +libbsd +libncurses
   TITLE:=Bluetooth Audio ALSA backend
   URL:=https://github.com/Arkq/bluez-alsa
 endef
@@ -36,8 +36,7 @@ define Package/bluez-alsa/description
   ALSA plugin supporting Bluetooth audio
 endef
 
-CONFIGURE_ARGS += --enable-aac
-# --enable-rfcomm --enable-hcitop
+# CONFIGURE_ARGS += --enable-aac --enable-rfcomm --enable-hcitop
 
 define Package/bluez-alsa/install
 	$(INSTALL_DIR) $(1)/usr/share/alsa/alsa.conf.d/
