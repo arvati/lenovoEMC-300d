@@ -14,22 +14,6 @@ define lenovo_defaults
 endef
 
 
-LPC_ICH_MODULES:= \
-  CONFIG_LPC_ICH:drivers/mfd/lpc_ich
-
-define KernelPackage/lpc_ich
-  $(call lenovo_defaults,$(LPC_ICH_MODULES))
-  TITLE:=LPC interface for Intel ICH
-  DEPENDS:=@PCI_SUPPORT @TARGET_x86 +kmod-itco-wdt
-endef
-
-define KernelPackage/lpc_ich/description
- LPC interface for Intel ICH
-endef
-
-$(eval $(call KernelPackage,lpc_ich))
-
-
 GPIO_ICH_MODULES:= \
   CONFIG_GPIO_ICH:drivers/gpio/gpio-ich
 

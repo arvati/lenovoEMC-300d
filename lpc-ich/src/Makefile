@@ -1,0 +1,1 @@
+obj-$(CONFIG_LPC_ICH)		+= lpc_ich.o
