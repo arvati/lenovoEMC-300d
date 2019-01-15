@@ -6,7 +6,7 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=ums8485md
+PKG_NAME:=gpio-f7188x
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Ademar Arvati Filho <arvati@hotmail.com>
@@ -16,22 +16,20 @@ include $(INCLUDE_DIR)/package.mk
 
 define KernelPackage/$(PKG_NAME)
   SUBMENU:=LenovoEMC-300d Drivers
-  TITLE:=UMS-8485MD-B LCD Driver
-  DEPENDS:=@GPIO_SUPPORT @TARGET_x86 +kmod-i2c-core
-  #+kmod-i2c-gpio +kmod-i2c-gpio-custom
-  #+kmod-gpio-ich +kmod-f71882fg
-
+  TITLE:=F71808E and F71869 F71869A F71882FG F71889F F81866 GPIO support
+  DEPENDS:=@PCI_SUPPORT @GPIO_SUPPORT @TARGET_x86
   FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).ko
   AUTOLOAD:=$(call AutoLoad,30,$(PKG_NAME),1)
   KCONFIG:=
 endef
 
 define KernelPackage/$(PKG_NAME)/description
- Kernel module for UMS-8485MD-B LCD driver
+ This option enables support for GPIOs found on Fintek Super-I/O chips F71869, F71869A, F71882FG, F71889F and F81866.
+	And added support for GPIO driver for Fintek Super-I/O F71808E
 endef
 
 EXTRA_KCONFIG:= \
-	CONFIG_LCD_UMS8485MD=m
+	CONFIG_GPIO_F7188X=m
 
 EXTRA_CFLAGS:= \
 	$(patsubst CONFIG_%, -DCONFIG_%=1, $(patsubst %=m,%,$(filter %=m,$(EXTRA_KCONFIG)))) \
