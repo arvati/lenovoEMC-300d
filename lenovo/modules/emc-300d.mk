@@ -124,24 +124,6 @@ endef
 
 $(eval $(call KernelPackage,rtc-cmos))
 
-MICROCODE_MODULES:= \
-  CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/microcode \
-  CONFIG_MICROCODE_INTEL:arch/x86/kernel/cpu/microcode/intel \
-  CONFIG_MICROCODE:arch/x86/kernel/cpu/microcode/core
-
-define KernelPackage/microcode
-  $(call lenovo_defaults,$(MICROCODE_MODULES))
-  TITLE:=CPU microcode loading support
-  DEPENDS:=@TARGET_x86 intel-microcode
-#CONFIG_CPU_SUP_INTEL=y CONFIG_PROCESSOR_SELECT CONFIG_EXPERT
-endef
-
-define KernelPackage/microcode/description
- If you say Y here, you will be able to update the microcode on Intel and AMD processors. The Intel support is for the IA32 family, e.g. Pentium Pro, Pentium II, Pentium III, Pentium 4, Xeon etc. The AMD support is for families 0x10 and later. You will obviously need the actual microcode binary data itself which is not shipped with the Linux kernel.
-endef
-
-$(eval $(call KernelPackage,microcode))
-
 TIGON3_MODULES:= \
   CONFIG_TIGON3:drivers/net/ethernet/broadcom/tg3
 
