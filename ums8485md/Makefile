@@ -17,7 +17,7 @@ include $(INCLUDE_DIR)/package.mk
 define KernelPackage/$(PKG_NAME)
   SUBMENU:=LenovoEMC-300d Drivers
   TITLE:=UMS-8485MD-B LCD Driver
-  DEPENDS:=@GPIO_SUPPORT @TARGET_x86 +kmod-i2c-core +kmod-lpc_ich
+  DEPENDS:=@GPIO_SUPPORT @TARGET_x86 +kmod-i2c-core
   FILES:=$(PKG_BUILD_DIR)/$(PKG_NAME).ko
   AUTOLOAD:=$(call AutoLoad,30,$(PKG_NAME),1)
   KCONFIG:=

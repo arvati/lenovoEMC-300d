@@ -1250,7 +1250,7 @@ static void lpc_ich_remove(struct pci_dev *dev)
 }
 
 static struct pci_driver lpc_ich_driver = {
-	.name		= "lpc_ich",
+	.name		= "lpc_ich_lenovo",
 	.id_table	= lpc_ich_ids,
 	.probe		= lpc_ich_probe,
 	.remove		= lpc_ich_remove,

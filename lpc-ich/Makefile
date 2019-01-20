@@ -7,7 +7,7 @@
 include $(TOPDIR)/rules.mk
 include $(INCLUDE_DIR)/kernel.mk
 
-PKG_NAME:=lpc_ich
+PKG_NAME:=lpc_ich_lenovo
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=Ademar Arvati Filho <arvati@hotmail.com>
@@ -38,7 +38,7 @@ define KernelPackage/$(PKG_NAME)/description
 endef
 
 EXTRA_KCONFIG:= \
-	CONFIG_LPC_ICH=m
+	CONFIG_LPC_ICH_LENOVO=m
 
 EXTRA_CFLAGS:= \
 	$(patsubst CONFIG_%, -DCONFIG_%=1, $(patsubst %=m,%,$(filter %=m,$(EXTRA_KCONFIG)))) \

@@ -20,7 +20,7 @@ GPIO_ICH_MODULES:= \
 define KernelPackage/gpio-ich
   $(call lenovo_defaults,$(GPIO_ICH_MODULES))
   TITLE:=GPIO interface for Intel ICH series
-  DEPENDS:=@PCI_SUPPORT @GPIO_SUPPORT @TARGET_x86 +kmod-lpc_ich
+  DEPENDS:=@PCI_SUPPORT @GPIO_SUPPORT @TARGET_x86
 endef
 
 define KernelPackage/gpio-ich/description

@@ -1,5 +1,5 @@
-config LPC_ICH
-	tristate "Intel ICH LPC"
+config LPC_ICH_LENOVO
+	tristate "Intel ICH LPC - Lenovo"
 	depends on PCI
 	select MFD_CORE
 	help

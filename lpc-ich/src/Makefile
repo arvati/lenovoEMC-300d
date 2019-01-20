@@ -1,1 +1,1 @@
-obj-$(CONFIG_LPC_ICH)		+= lpc_ich.o
+obj-$(CONFIG_LPC_ICH_LENOVO)		+= lpc_ich_lenovo.o
