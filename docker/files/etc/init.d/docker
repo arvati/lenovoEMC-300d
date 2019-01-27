@@ -1,0 +1,70 @@
+#!/bin/sh /etc/rc.common
+
+### BEGIN INIT INFO
+# Provides:           docker
+# Required-Start:     $syslog $remote_fs
+# Required-Stop:      $syslog $remote_fs
+# Should-Start:       cgroupfs-mount cgroup-lite
+# Should-Stop:        cgroupfs-mount cgroup-lite
+# Default-Start:      2 3 4 5
+# Default-Stop:       0 1 6
+# Short-Description:  Create lightweight, portable, self-sufficient containers.
+# Description:
+#  Docker is an open-source project to easily create lightweight, portable,
+#  self-sufficient containers from any application. The same container that a
+#  developer builds and tests on a laptop can run at scale, in production, on
+#  VMs, bare metal, OpenStack clusters, public clouds and more.
+### END INIT INFO
+
+START=99
+USE_PROCD=1
+
+#export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+BASE=docker
+
+# modify these in /etc/default/$BASE (/etc/default/docker)
+DOCKERD=/usr/bin/dockerd
+DOCKER_LOGFILE=/var/log/$BASE.log
+DOCKER_OPTS=
+DOCKER_DESC="Docker"
+
+if [ -f /etc/config/$BASE ]; then
+	. /etc/config/$BASE
+fi
+
+# Check docker is present
+if [ ! -x $DOCKERD ]; then
+	echo "ERROR: $DOCKERD not present or not executable"
+	exit 1
+fi
+
+fail_unless_root() {
+	if [ "$(id -u)" != '0' ]; then
+		echo "ERROR: $DOCKER_DESC must be run as root"
+		exit 1
+	fi
+}
+
+
+start_service() {
+	fail_unless_root
+
+	touch "$DOCKER_LOGFILE"
+	chgrp docker "$DOCKER_LOGFILE"
+
+	echo "Starting $DOCKER_DESC: $BASE"
+	
+	procd_open_instance
+	procd_set_param command $DOCKERD \
+			$DOCKER_OPTS \
+				>> "$DOCKER_LOGFILE" 2>&1
+
+	if [ -f /etc/config/$BASE ]; then
+		procd_set_param file "/etc/config/$BASE"
+	fi
+
+	procd_set_param limits file="1048576" process="unlimited" core="unlimited"
+	procd_set_param respawn
+	procd_close_instance
+}
