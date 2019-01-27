@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=docker
-PKG_VERSION:=17.05.0
+PKG_VERSION:=18.09.1
 PKG_RELEASE:=0
 
 include $(INCLUDE_DIR)/package.mk
@@ -22,7 +22,8 @@ define Package/docker
 endef
 
 define Package/docker/description
- DEV ONLY -- test package to run precompiled docker from ALPINE
+ DEV ONLY -- test package to run precompiled docker for Alpine
+ https://download.docker.com/linux/static/stable/x86_64/docker-18.09.1.tgz
 endef
 
 
