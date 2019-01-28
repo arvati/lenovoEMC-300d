@@ -44,20 +44,12 @@ endef
 
 # Dirty trick to define PATH_MAX. It is needed by apr.h. PATH_MAX is defined in <linux/limits> and is the same for all feeds
 
-#SCONS_VARS += \
-#	LINKFLAGS="$(TARGET_LDFLAGS)"
+SCONS_VARS += \
+	LINKFLAGS="$(TARGET_LDFLAGS)"
 
-SCONS_VARS = \
-        CC="$(TARGET_CC_NOCACHE)" \
-        CXX="$(TARGET_CXX_NOCACHE)" \
-        CFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-        CXXFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
-        CPPFLAGS="$(TARGET_CPPFLAGS) $(EXTRA_CPPFLAGS) -DPATH_MAX=4096" \
-        LDFLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS)" \
-        DESTDIR="$(PKG_INSTALL_DIR)" \
-    	LINKFLAGS="$(TARGET_LDFLAGS)"
 
 SCONS_OPTIONS += \
+    CPPFLAGS="$(TARGET_CPPFLAGS) $(EXTRA_CPPFLAGS) -DPATH_MAX=4096" \
 	PREFIX="/usr" \
 	APR="$(STAGING_DIR)/usr" \
 	APU="$(STAGING_DIR)/usr"
@@ -75,6 +67,7 @@ define Build/Configure
 	)
 endef
 
+# Also take a look at https://github.com/openwrt/packages/blob/master/utils/gpsd/Makefile
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/serf-1
 	$(CP) $(PKG_BUILD_DIR)/{serf_bucket_types,serf_bucket_util,serf}.h $(1)/usr/include/serf-1/
