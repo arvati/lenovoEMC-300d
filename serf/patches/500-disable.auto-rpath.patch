@@ -1,14 +1,5 @@
 --- a/SConstruct
 +++ b/SConstruct
-@@ -68,7 +68,7 @@
-   default_libdir='..'
-   default_prefix='Debug'
- else:
--  default_incdir='/usr'
-+  default_incdir='$STAGING_DIR/opt'
-   default_libdir='$PREFIX/lib'
-   default_prefix='/usr/local'
-
 @@ -224,9 +224,6 @@
  else:
    LIBNAMESTATIC = 'serf-${MAJOR}'
