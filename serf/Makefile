@@ -44,11 +44,12 @@ endef
 
 # Dirty trick to define PATH_MAX. It is needed by apr.h. PATH_MAX is defined in <linux/limits> and is the same for all feeds
 
-SCONS_VARS += \
-	LINKFLAGS="$(TARGET_LDFLAGS)"
+#SCONS_VARS += \
+#	LINKFLAGS="$(TARGET_LDFLAGS)"
 
 SCONS_OPTIONS += \
 	CPPFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -DPATH_MAX=4096" \
+	LINKFLAGS="$(TARGET_LDFLAGS)" \
 	PREFIX="/usr" \
 	APR="$(STAGING_DIR)/usr" \
 	APU="$(STAGING_DIR)/usr"
@@ -59,13 +60,12 @@ endef
 
 
 define Build/Configure
-	(cd $(PKG_BUILD_DIR); \
+	( \
+		cd $(PKG_BUILD_DIR); \
 		$(SCONS_VARS) \
-		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
 		scons \
-			$(SCONS_OPTIONS) \
+		$(SCONS_OPTIONS) \
 	)
-
 endef
 
 define Build/InstallDev
