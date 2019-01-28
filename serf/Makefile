@@ -47,9 +47,17 @@ endef
 #SCONS_VARS += \
 #	LINKFLAGS="$(TARGET_LDFLAGS)"
 
+SCONS_VARS = \
+        CC="$(TARGET_CC_NOCACHE)" \
+        CXX="$(TARGET_CXX_NOCACHE)" \
+        CFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+        CXXFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+        CPPFLAGS="$(TARGET_CPPFLAGS) $(EXTRA_CPPFLAGS) -DPATH_MAX=4096"" \
+        LDFLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS)" \
+        DESTDIR="$(PKG_INSTALL_DIR)" \
+    	LINKFLAGS="$(TARGET_LDFLAGS)"
+
 SCONS_OPTIONS += \
-	CPPFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -DPATH_MAX=4096" \
-	LINKFLAGS="$(TARGET_LDFLAGS)" \
 	PREFIX="/usr" \
 	APR="$(STAGING_DIR)/usr" \
 	APU="$(STAGING_DIR)/usr"
@@ -60,11 +68,10 @@ endef
 
 
 define Build/Configure
-	( \
-		cd $(PKG_BUILD_DIR); \
+	(cd $(PKG_BUILD_DIR); \
 		$(SCONS_VARS) \
 		scons \
-		$(SCONS_OPTIONS) \
+			$(SCONS_OPTIONS) \
 	)
 endef
 
