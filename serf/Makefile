@@ -26,7 +26,8 @@ define Package/libserf
 	TITLE:=High performance C-based HTTP client library
 	URL:=https://serf.apache.org/
 	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+libopenssl +libaprutil +unixodbc
+	DEPENDS:=+libopenssl +libaprutil +PACKAGE_unixodbc:unixodbc +libapr
+	#### +unixodbc
 endef
 
 define Package/libserf/description
@@ -43,45 +44,48 @@ endef
 
 # Dirty trick to define PATH_MAX. It is needed by apr.h. PATH_MAX is defined in <linux/limits> and is the same for all feeds
 
+SCONS_VARS += \
+	LINKFLAGS="$(TARGET_LDFLAGS)"
+
 SCONS_OPTIONS += \
 	CC="STAGING_DIR=$(STAGING_DIR) $(TOOLCHAIN_DIR)/bin/$(TARGET_CC_NOCACHE)" \
-	CPPFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS) -DPATH_MAX=4096" \
-	LINKFLAGS="$(TARGET_LDFLAGS)" \
-	PREFIX="/opt" \
-	APR="$(STAGING_DIR)/opt" \
-	APU="$(STAGING_DIR)/opt"
+	TARGET_OS=linux \
+	TARGET_TRANSPORT=ALL \
+	TARGET_ARCH=$(ARCH) \
+	STAGING_DIR=$(STAGING_DIR) \
+	APR="$(STAGING_DIR)/usr" \
+	APU="$(STAGING_DIR)/usr"
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	(cd $(PKG_BUILD_DIR) ; \
-		$(SED) "s!default_incdir='/usr!default_incdir='$(STAGING_DIR)/opt!g" SConstruct ;\
-	)
 endef
 
 
 define Build/Configure
-	( \
-		cd $(PKG_BUILD_DIR); \
+	(cd $(PKG_BUILD_DIR); \
 		$(SCONS_VARS) \
+		CFLAGS="$(TARGET_CFLAGS) $(TARGET_CPPFLAGS)" \
 		scons \
-		$(SCONS_OPTIONS) \
+			prefix=/usr \
+			$(SCONS_OPTIONS) \
 	)
+
 endef
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/opt/include/serf-1
-	$(CP) $(PKG_BUILD_DIR)/{serf_bucket_types,serf_bucket_util,serf}.h $(1)/opt/include/serf-1/
-	$(INSTALL_DIR) $(1)/opt/lib
-	$(CP) $(PKG_BUILD_DIR)/libserf-1.{a,so*} $(1)/opt/lib/
-	$(INSTALL_DIR) $(1)/opt/lib/pkgconfig
-	$(CP) $(PKG_BUILD_DIR)/serf-1.pc $(1)/opt/lib/pkgconfig/
+	$(INSTALL_DIR) $(1)/usr/include/serf-1
+	$(CP) $(PKG_BUILD_DIR)/{serf_bucket_types,serf_bucket_util,serf}.h $(1)/usr/include/serf-1/
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/libserf-1.{a,so*} $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
+	$(CP) $(PKG_BUILD_DIR)/serf-1.pc $(1)/usr/lib/pkgconfig/
 endef
 
 
 
 define Package/libserf/install
-	$(INSTALL_DIR) $(1)/lib
-	$(CP) $(PKG_BUILD_DIR)/libserf-1.so* $(1)/lib
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) $(PKG_BUILD_DIR)/libserf-1.so* $(1)/usr/lib
 endef
 
 $(eval $(call BuildPackage,libserf))
