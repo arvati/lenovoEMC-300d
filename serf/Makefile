@@ -46,10 +46,9 @@ endef
 
 SCONS_VARS += \
 	LINKFLAGS="$(TARGET_LDFLAGS)"
-#	CC="$(TARGET_CC_NOCACHE)" \
 
 SCONS_OPTIONS += \
-	CC="STAGING_DIR=$(STAGING_DIR) $(TOOLCHAIN_DIR)/bin/$(TARGET_CC_NOCACHE)" \
+	CC="$(TARGET_CC_NOCACHE)" \
 	CFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
     CPPFLAGS="$(TARGET_CPPFLAGS) $(EXTRA_CPPFLAGS) -DPATH_MAX=4096" \
 	PREFIX="/usr" \
@@ -66,6 +65,7 @@ define Build/Configure
 		$(SCONS_VARS) \
 		scons \
 			$(SCONS_OPTIONS) \
+		install \
 	)
 endef
 
