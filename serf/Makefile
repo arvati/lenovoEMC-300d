@@ -26,7 +26,7 @@ define Package/libserf
 	TITLE:=High performance C-based HTTP client library
 	URL:=https://serf.apache.org/
 	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+libopenssl +libaprutil +PACKAGE_unixodbc:unixodbc +libapr +libc +libstdcpp
+	DEPENDS:=+libopenssl +libaprutil +PACKAGE_unixodbc:unixodbc +libapr
 	#### +unixodbc
 endef
 
@@ -49,7 +49,13 @@ SCONS_VARS += \
 
 
 SCONS_OPTIONS += \
+	CC="$(TARGET_CC_NOCACHE)" \
+	CXX="$(TARGET_CXX_NOCACHE)" \
+	CFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
+	CXXFLAGS="$(TARGET_CFLAGS) $(EXTRA_CFLAGS)" \
     CPPFLAGS="$(TARGET_CPPFLAGS) $(EXTRA_CPPFLAGS) -DPATH_MAX=4096" \
+	LDFLAGS="$(TARGET_LDFLAGS) $(EXTRA_LDFLAGS)" \
+	DESTDIR="$(PKG_INSTALL_DIR)" \
 	PREFIX="/usr" \
 	APR="$(STAGING_DIR)/usr" \
 	APU="$(STAGING_DIR)/usr"
