@@ -1,4 +1,4 @@
-# link https://github.com/Entware/rtndev/blob/master/serf/Makefile
+# link source https://github.com/Entware/rtndev/blob/master/serf/Makefile
 #
 # Copyright (C) 2017-2018 Entware
 #
@@ -43,6 +43,7 @@ define Package/libserf/description
 endef
 
 # Dirty trick to define PATH_MAX. It is needed by apr.h. PATH_MAX is defined in <linux/limits> and is the same for all feeds
+# And https://www.reddit.com/r/C_Programming/comments/5tk6zq/compiling_against_musl/
 
 SCONS_VARS += \
 	LINKFLAGS="$(TARGET_LDFLAGS)"
