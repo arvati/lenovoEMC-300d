@@ -1,0 +1,98 @@
+<%#
+
+LuCI LXC module
+
+Copyright (C) 2014, Cisco Systems, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Author: Petar Koretic <petar.koretic@sartura.hr>
+
+-%>
+
+<fieldset class="cbi-section">
+	<legend><%:Configured printers%></legend>
+	<div class="cbi-section-node">
+		<table id="t_printer_list" class="cbi-section-table">
+			<tr class="cbi-section-table-titles">
+				<th class="cbi-section-table-cell"><%:Printer%></th>
+			</tr>
+		</table>
+	</div>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<legend><%:Current queue%></legend>
+	<div class="cbi-section-node">
+		<table id="t_queue_list" class="cbi-section-table">
+			<tr class="cbi-section-table-titles">
+				<th class="cbi-section-table-cell"><%:Job%></th>
+			</tr>
+		</table>
+	</div>
+</fieldset>
+
+<fieldset class="cbi-section">
+	<legend><%:Advanced settings%></legend>
+	<div class="cbi-section-node">
+	<p><%:For more configuration options, please visit CUPS web UI.%></p>
+	</div>
+	<div class="cbi-section-node">
+	<p><a href="http://<%= luci.http.getenv('HTTP_HOST') %>:631"><%:CUPS web UI%></a></p>
+	</div>
+</fieldset>
+
+<script type="text/javascript">//<![CDATA[
+	var t_printer_list = document.getElementById('t_printer_list');
+	var t_queue_list = document.getElementById('t_queue_list');
+
+	function set_empty(t_list)
+	{
+		var row_count = t_list.rows.length;
+		while(--row_count) t_list.deleteRow(row_count);
+	}
+
+	function fill_table(x, t_list, data)
+	{
+		if (!x) return;
+
+		var t_count = Object.keys(data).length
+		if (!data || !t_count)
+			return;
+
+		set_empty(t_list);
+
+		for(var key in data)
+		{
+			var row = t_list.insertRow(-1);
+			row.innerHTML = data[key];
+		}
+
+	}
+
+	function printer_list_update()
+	{
+		XHR.poll(4, '<%=luci.dispatcher.build_url("admin", "services")%>/cups_get_printers', null,
+		function(x, data)
+		{
+			fill_table(x, t_printer_list, data);
+		})
+	}
+
+	function queue_list_update()
+	{
+		XHR.poll(4, '<%=luci.dispatcher.build_url("admin", "services")%>/cups_get_queue', null,
+		function(x, data)
+		{
+			fill_table(x, t_queue_list, data);
+		})
+	}
+
+	printer_list_update();
+	queue_list_update();
+
+//]]></script>
