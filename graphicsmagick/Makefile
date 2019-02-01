@@ -1,110 +1,100 @@
-#
-# Copyright (C) 2009-2010 OpenWrt.org
-#
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
-#
+# linkk = https://github.com/openwrt/packages/pull/8040
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=GraphicsMagick
-PKG_VERSION:=1.3.30
-PKG_RELEASE:=3
+PKG_NAME:=graphicsmagick
+PKG_VERSION:=1.3.31
+PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_BUILD_DIR:=$(BUILD_DIR)/GraphicsMagick-$(PKG_VERSION)
+PKG_SOURCE:=GraphicsMagick-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=@SF/graphicsmagick
-PKG_MD5SUM:=a773040cc9c57356fd3a6fa660ea29e5
+PKG_HASH:=69ee4ac6a49a818098f47f51c4f430ca9bb2493cb3594f322eb211b8aeb71f41
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=Copyright.txt
+PKG_MAINTAINER:=Val Kulkov <val.kulkov@gmail.com>
+
+PKG_BUILD_PARALLEL:=1
+DISABLE_NLS:=
+PKG_BUILD_DEPENDS:=zlib freetype libpng libjpeg tiff
 
 include $(INCLUDE_DIR)/package.mk
 
-export PATH:=$(PKG_BUILD_DIR)/bin:$(TARGET_PATH)
-
-PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
 
-define Package/GraphicsMagick/Default
+define Package/graphicsmagick/Default
   SECTION:=multimedia
   CATEGORY:=Multimedia
-  TITLE:=GraphicsMagick
-  URL:=http://www.graphicsmagick.org/
-  DEPENDS:=+libbz2 +libfreetype +libltdl +libpthread +libstdcpp +zlib
+  TITLE:=Graphics manipulation tools
+  URL:=https://www.graphicsmagick.org/
+  DEPENDS:=graphicsmagick
 endef
 
-define Package/GraphicsMagick
-  $(call Package/GraphicsMagick/Default)
+define Package/graphicsmagick
+  $(call Package/graphicsmagick/Default)
+  DEPENDS:=+libltdl +libpthread +zlib +libfreetype +libpng +libjpeg +libtiff
 endef
 
-define Package/GraphicsMagick/description
-  An image manipulation library.
-endef
-
-define Package/GraphicsMagick-jpeg
-  $(call Package/GraphicsMagick/Default)
-  TITLE+= (jpeg)
-  DEPENDS:=+GraphicsMagick +libjpeg +zlib +liblzma
-endef
-
-define Package/GraphicsMagick-jpeg/description
-  GraphicsMagick JPEG module
-endef
-
-define Package/GraphicsMagick-bmp
-  $(call Package/GraphicsMagick/Default)
-  TITLE+= (bmp)
-  DEPENDS:=+GraphicsMagick
-endef
-
-define Package/GraphicsMagick-bmp/description
-  GraphicsMagick BMP module
+define Package/graphicsmagick/description
+GraphicsMagick is a free and open-source software suite for displaying,
+converting, and editing raster image and vector image files. It is a fork
+of GraphicsMagick.
 endef
 
 CONFIGURE_ARGS += \
-	  --with-modules \
-	  --enable-shared \
-	  --enable-static \
-	  --without-lzma \
-	  --without-xml \
-	  --without-x \
+	--enable-shared \
+	--disable-static \
+	--enable-dependency-tracking \
+	--with-modules \
+	--with-threads \
+	--without-magick-plus-plus \
+	--without-perl \
+	--without-bzlib \
+	--without-dps \
+	--without-fpx \
+	--without-jbig \
+	--without-webp \
+	--with-jpeg \
+	--without-jp2 \
+	--without-lcms2 \
+	--without-lzma \
+	--with-png \
+	--with-tiff \
+	--without-trio \
+	--with-ttf \
+	--without-umem \
+	--without-wmf \
+	--without-xml \
+	--with-zlib \
+	--without-zstd \
+	--without-x
 
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/include/GraphicsMagick/magick
-	$(INSTALL_DIR) $(1)/usr/include/GraphicsMagick/wand
+	$(INSTALL_DIR) $(1)/usr/include
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/include/* \
 		$(1)/usr/include/
 
-	$(INSTALL_DIR) $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/*.so* \
 		$(1)/usr/lib/
 
-	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig/
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(INSTALL_DATA) \
 		$(PKG_INSTALL_DIR)/usr/lib/pkgconfig/* \
 		$(1)/usr/lib/pkgconfig/
 endef
 
-define Package/GraphicsMagick/install
-	$(INSTALL_DIR) $(1)/usr/lib/
-	$(CP) \
-		$(PKG_INSTALL_DIR)/usr/lib/*.so* \
-		$(1)/usr/lib/
-	$(INSTALL_DIR) $(1)/usr/share/GraphicsMagick-$(PKG_VERSION)
-	$(CP) \
-		$(PKG_INSTALL_DIR)/usr/share/GraphicsMagick-$(PKG_VERSION)/* \
-		$(1)/usr/share/GraphicsMagick-$(PKG_VERSION)
+GMlibdir:=usr/lib/GraphicsMagick-$(PKG_VERSION)
+define Package/graphicsmagick/install
+	$(INSTALL_DIR) $(1)/usr/bin $(1)/$(GMlibdir)
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so* $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
+	$(CP) $(PKG_INSTALL_DIR)/$(GMlibdir)/* $(1)/$(GMlibdir)/
 endef
 
-define BuildPlugin
-  define Package/GraphicsMagick-$(1)/install
-	$(INSTALL_DIR) $$(1)/usr/lib/GraphicsMagick-$(PKG_VERSION)/modules-Q8/coders
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/GraphicsMagick-$(PKG_VERSION)/modules-Q8/coders/$(1).{so,la} \
-		$$(1)/usr/lib/GraphicsMagick-$(PKG_VERSION)/modules-Q8/coders
-  endef
-
-  $$(eval $$(call BuildPackage,GraphicsMagick-$(1)))
-endef
-
-$(eval $(call BuildPackage,GraphicsMagick))
-$(eval $(call BuildPlugin,jpeg))
-$(eval $(call BuildPlugin,bmp))
+$(eval $(call BuildPackage,graphicsmagick))
