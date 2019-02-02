@@ -131,7 +131,7 @@ endef
 
 define Package/apache2
 $(call Package/apache2/Default)
-  DEPENDS += +libapr +libaprutil +libpcre +libopenssl +unixodbc +zlib +APACHE2_HTTP2:libnghttp2 +APACHE2_LUA:liblua
+  DEPENDS += +libapr +libaprutil +libpcre +libopenssl +unixodbc +zlib +APACHE2_HTTP2:libnghttp2 +APACHE2_LUA:liblua +jansson +libcurl
 endef
 
 define Package/apache2/description
