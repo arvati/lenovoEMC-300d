@@ -15,7 +15,7 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=@SF/gimp-print
 PKG_MD5SUM:=aefbec27b96dd404d9ac9811e17d58ce
 
-PKG_BUILD_DEPENDS:=gutenprint-cups/host cups libiconv
+PKG_BUILD_DEPENDS:=gutenprint-cups cups libiconv
 HOST_BUILD_DEPENDS:=libiconv/host
 PKG_INSTALL:=1
 
