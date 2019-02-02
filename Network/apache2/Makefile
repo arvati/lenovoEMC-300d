@@ -197,6 +197,8 @@ define Build/Configure
 		--with-crypto \
 		--with-sqlit3="$(STAGING_DIR)/usr" \
 		--with-openssl="$(STAGING_DIR)/usr" \
+		--enable-module=so \
+		--enable-shared=max \
 		--enable-ssl \
 		--enable-proxy \
 		--enable-cgi \
