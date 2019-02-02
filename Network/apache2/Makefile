@@ -191,7 +191,6 @@ define Build/Configure
 		--with-apr="$(STAGING_DIR)/usr/bin/apr-1-config" \
 		--with-apr-util="$(STAGING_DIR)/usr/bin/apu-1-config" \
 		--with-pcre="$(STAGING_DIR)/usr/bin/pcre-config" \
-		--prefix=/usr/local/apache2 \
 		$(ADDITIONAL_MODULES) \
 		–enable-dev \
 		--enable-http \
@@ -201,7 +200,6 @@ define Build/Configure
 		--enable-ssl \
 		--enable-proxy \
 		--enable-cgi \
-		--enable-so \
 		--enable-info	\
 		--enable-alias \
 		--enable-rewrite \
