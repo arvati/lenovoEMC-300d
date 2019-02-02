@@ -84,18 +84,18 @@ endif
 ifeq ($(CONFIG_APACHE2_AUTH),y)
   ADDITIONAL_MODULES += --enable-auth_basic --enable-auth_digest \
                         --enable-auth_form --enable-authn_anon --enable-authn_core \
-                         --enable-authn_dbd --enable-authn_dbm --enable-authn_file  \
-                         --enable-authn_socache --enable-authnz_fcgi --enable-authnz_ldap  \
-                         --enable-authz_core --enable-authz_dbd --enable-authz_dbm \
+                          --enable-authn_dbm --enable-authn_file  \
+                         --enable-authn_socache --enable-authnz_fcgi   \
+                         --enable-authz_core  \
                          --enable-authz_groupfile --enable-authz_host \
                          --enable-authz_owner --enable-authz_user
 endif
 ifneq ($(CONFIG_APACHE2_AUTH),y)
   ADDITIONAL_MODULES += --disable-auth_basic --disable-auth_digest \
                         --disable-auth_form --disable-authn_anon --disable-authn_core \
-                        --disable-authn_dbd --disable-authn_dbm --disable-authn_file  \
-                        --disable-authn_socache --disable-authnz_fcgi --disable-authnz_ldap  \
-                        --disable-authz_core --disable-authz_dbd --disable-authz_dbm \
+                         --disable-authn_dbm --disable-authn_file  \
+                        --disable-authn_socache --disable-authnz_fcgi   \
+                        --disable-authz_core  \
                         --disable-authz_groupfile --disable-authz_host \
                         --disable-authz_owner --disable-authz_user
 endif
@@ -205,9 +205,7 @@ define Build/Configure
 		--enable-alias \
 		--enable-rewrite \
 		--enable-deflate \
-		--disable-md \
 		--disable-disk-cache \
-		--enable-maintainer-mode \
 		--with-mpm=prefork \
 		--with-mpm=worker \
 		--enable-mime-magic \
