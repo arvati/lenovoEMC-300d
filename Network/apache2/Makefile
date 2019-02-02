@@ -59,18 +59,18 @@ ifneq ($(CONFIG_APACHE2_DAV),y)
 endif
 
 ifeq ($(CONFIG_APACHE2_PROXY),y)
-  ADDITIONAL_MODULES += --enable-proxy_ajp --enable-proxy_balancer /
-                        --enable-proxy_connect --enable-proxy_express --enable-proxy_fcgi /
-                         --enable-proxy_fdpass --enable-proxy_ftp --enable-proxy_hcheck  /
-                         --enable-proxy_html --enable-proxy_http --enable-proxy_http2  /
-                         --enable-proxy_scgi --enable-proxy_uwsgi --enable-proxy_wstunnel
+  ADDITIONAL_MODULES += --enable-proxy_ajp --enable-proxy_balancer \
+                        --enable-proxy_connect --enable-proxy_express --enable-proxy_fcgi \
+                        --enable-proxy_fdpass --enable-proxy_ftp --enable-proxy_hcheck \
+                        --enable-proxy_html --enable-proxy_http --enable-proxy_http2 \
+                        --enable-proxy_scgi --enable-proxy_uwsgi --enable-proxy_wstunnel
 endif
 
 ifneq ($(CONFIG_APACHE2_PROXY),y)
-  ADDITIONAL_MODULES += --disable-proxy_ajp --disable-proxy_balancer /
-                        --disable-proxy_connect --disable-proxy_express --disable-proxy_fcgi /
-                        --disable-proxy_fdpass --disable-proxy_ftp --disable-proxy_hcheck  /
-                        --disable-proxy_html --disable-proxy_http --disable-proxy_http2  /
+  ADDITIONAL_MODULES += --disable-proxy_ajp --disable-proxy_balancer \
+                        --disable-proxy_connect --disable-proxy_express --disable-proxy_fcgi \
+                        --disable-proxy_fdpass --disable-proxy_ftp --disable-proxy_hcheck \
+                        --disable-proxy_html --disable-proxy_http --disable-proxy_http2 \
                         --disable-proxy_scgi --disable-proxy_uwsgi --disable-proxy_wstunnel
 endif
 
@@ -82,20 +82,22 @@ ifneq ($(CONFIG_APACHE2_SESSION),y)
 endif
 
 ifeq ($(CONFIG_APACHE2_AUTH),y)
-  ADDITIONAL_MODULES += --enable-auth_basic --enable-auth_digest /
-                        --enable-auth_form --enable-authn_anon --enable-authn_core /
-                         --enable-authn_dbd --enable-authn_dbm --enable-authn_file  /
-                         --enable-authn_socache --enable-authnz_fcgi --enable-authnz_ldap  /
-                         --enable-authz_core --enable-authz_dbd --enable-authz_dbm /
-                         --enable-authz_groupfile --enable-authz_host --enable-authz_owner --enable-authz_user
+  ADDITIONAL_MODULES += --enable-auth_basic --enable-auth_digest \
+                        --enable-auth_form --enable-authn_anon --enable-authn_core \
+                         --enable-authn_dbd --enable-authn_dbm --enable-authn_file  \
+                         --enable-authn_socache --enable-authnz_fcgi --enable-authnz_ldap  \
+                         --enable-authz_core --enable-authz_dbd --enable-authz_dbm \
+                         --enable-authz_groupfile --enable-authz_host \
+                         --enable-authz_owner --enable-authz_user
 endif
 ifneq ($(CONFIG_APACHE2_AUTH),y)
-  ADDITIONAL_MODULES += --disable-auth_basic --disable-auth_digest /
-                        --disable-auth_form --disable-authn_anon --disable-authn_core /
-                        --disable-authn_dbd --disable-authn_dbm --disable-authn_file  /
-                        --disable-authn_socache --disable-authnz_fcgi --disable-authnz_ldap  /
-                        --disable-authz_core --disable-authz_dbd --disable-authz_dbm /
-                        --disable-authz_groupfile --disable-authz_host --disable-authz_owner --disable-authz_user
+  ADDITIONAL_MODULES += --disable-auth_basic --disable-auth_digest \
+                        --disable-auth_form --disable-authn_anon --disable-authn_core \
+                        --disable-authn_dbd --disable-authn_dbm --disable-authn_file  \
+                        --disable-authn_socache --disable-authnz_fcgi --disable-authnz_ldap  \
+                        --disable-authz_core --disable-authz_dbd --disable-authz_dbm \
+                        --disable-authz_groupfile --disable-authz_host \
+                        --disable-authz_owner --disable-authz_user
 endif
 
 ifeq ($(CONFIG_APACHE2_VHOST),y)
