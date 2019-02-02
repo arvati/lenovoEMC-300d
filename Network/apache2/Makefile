@@ -75,10 +75,10 @@ ifneq ($(CONFIG_APACHE2_PROXY),y)
 endif
 
 ifeq ($(CONFIG_APACHE2_SESSION),y)
-  ADDITIONAL_MODULES += --enable-session --enable-session_cookie --enable-session_crypto
+  ADDITIONAL_MODULES += --enable-session
 endif
 ifneq ($(CONFIG_APACHE2_SESSION),y)
-  ADDITIONAL_MODULES += --disable-session --disable-session_cookie --disable-session_crypto
+  ADDITIONAL_MODULES += --disable-session
 endif
 
 ifeq ($(CONFIG_APACHE2_AUTH),y)
