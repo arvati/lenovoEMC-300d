@@ -36,24 +36,28 @@ PKG_CONFIG_DEPENDS:= \
 # http://httpd.apache.org/docs/2.4/mod/
 
 ADDITIONAL_MODULES:=
+
 ifeq ($(CONFIG_APACHE2_LUA),y)
   ADDITIONAL_MODULES += --enable-lua
 endif
 ifneq ($(CONFIG_APACHE2_LUA),y)
   ADDITIONAL_MODULES += --disable-lua
 endif
+
 ifeq ($(CONFIG_APACHE2_HTTP2),y)
   ADDITIONAL_MODULES += --enable-http2
 endif
 ifneq ($(CONFIG_APACHE2_HTTP2),y)
   ADDITIONAL_MODULES += --disable-http2
 endif
+
 ifeq ($(CONFIG_APACHE2_DAV),y)
   ADDITIONAL_MODULES += --enable-dav --enable-dav_fs --enable-dav_lock
 endif
 ifneq ($(CONFIG_APACHE2_DAV),y)
   ADDITIONAL_MODULES += --disable-dav --disable-dav_fs --disable-dav_lock
 endif
+
 ifeq ($(CONFIG_APACHE2_PROXY),y)
   ADDITIONAL_MODULES += --enable-proxy_ajp --enable-proxy_balancer /
                         --enable-proxy_connect --enable-proxy_express --enable-proxy_fcgi /
@@ -61,6 +65,7 @@ ifeq ($(CONFIG_APACHE2_PROXY),y)
                          --enable-proxy_html --enable-proxy_http --enable-proxy_http2  /
                          --enable-proxy_scgi --enable-proxy_uwsgi --enable-proxy_wstunnel
 endif
+
 ifneq ($(CONFIG_APACHE2_PROXY),y)
   ADDITIONAL_MODULES += --disable-proxy_ajp --disable-proxy_balancer /
                         --disable-proxy_connect --disable-proxy_express --disable-proxy_fcgi /
@@ -68,12 +73,14 @@ ifneq ($(CONFIG_APACHE2_PROXY),y)
                         --disable-proxy_html --disable-proxy_http --disable-proxy_http2  /
                         --disable-proxy_scgi --disable-proxy_uwsgi --disable-proxy_wstunnel
 endif
+
 ifeq ($(CONFIG_APACHE2_SESSION),y)
   ADDITIONAL_MODULES += --enable-session --enable-session_cookie --enable-session_crypto
 endif
 ifneq ($(CONFIG_APACHE2_SESSION),y)
   ADDITIONAL_MODULES += --disable-session --disable-session_cookie --disable-session_crypto
 endif
+
 ifeq ($(CONFIG_APACHE2_AUTH),y)
   ADDITIONAL_MODULES += --enable-auth_basic --enable-auth_digest /
                         --enable-auth_form --enable-authn_anon --enable-authn_core /
@@ -90,6 +97,7 @@ ifneq ($(CONFIG_APACHE2_AUTH),y)
                         --disable-authz_core --disable-authz_dbd --disable-authz_dbm /
                         --disable-authz_groupfile --disable-authz_host --disable-authz_owner --disable-authz_user
 endif
+
 ifeq ($(CONFIG_APACHE2_VHOST),y)
   ADDITIONAL_MODULES += --enable-vhost_alias
 endif
