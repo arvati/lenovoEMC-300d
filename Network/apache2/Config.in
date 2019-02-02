@@ -2,52 +2,45 @@ menu "Configuration"
         depends on PACKAGE_apache2
 
 config APACHE2_LUA
-        bool
-        prompt "Enable LUA"
+        bool "Enable LUA"
         help
               Provides Lua hooks into various portions of the httpd request processing.
         default y
 
 config APACHE2_HTTP2
-        bool
-        prompt "Enable HTTP2"
+        bool "Enable HTTP2"
         help
                 Enable HTTPS2 support.
         default y
 
 config APACHE2_DAV
-        bool
-        prompt "Enable DAV"
+        bool "Enable DAV"
         help
                 Enable Distributed Authoring and Versioning (WebDAV) functionality support and Filesystem provider.
         default y
 
 
 config APACHE2_PROXY
-        bool
-        prompt "Enable PROXY Extension"
+        bool "Enable PROXY Extension"
         help
                 Enable Multi-protocol proxy/gateway server support for several extensions.
         default y
 
 config APACHE2_SESSION
-        bool
-        prompt "Enable SESSION"
+        bool "Enable SESSION"
         help
                 Enable Session support.
         default y
 
 
 config APACHE2_AUTH
-        bool
-        prompt "Enable AUTH"
+        bool "Enable AUTH"
         help
                 Enable Auth support.
         default y
 
 config APACHE2_VHOST
-        bool
-        prompt "Enable VHOST"
+        bool "Enable VHOST"
         help
                 Enable VHOST support.
         default y
