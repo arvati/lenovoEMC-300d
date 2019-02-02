@@ -62,7 +62,7 @@ ifeq ($(CONFIG_APACHE2_PROXY),y)
   ADDITIONAL_MODULES += --enable-proxy_ajp --enable-proxy_balancer \
                         --enable-proxy_connect --enable-proxy_express --enable-proxy_fcgi \
                         --enable-proxy_fdpass --enable-proxy_ftp --enable-proxy_hcheck \
-                        --enable-proxy_html --enable-proxy_http --enable-proxy_http2 \
+                        --enable-proxy_http --enable-proxy_http2 \
                         --enable-proxy_scgi --enable-proxy_uwsgi --enable-proxy_wstunnel
 endif
 
@@ -70,7 +70,7 @@ ifneq ($(CONFIG_APACHE2_PROXY),y)
   ADDITIONAL_MODULES += --disable-proxy_ajp --disable-proxy_balancer \
                         --disable-proxy_connect --disable-proxy_express --disable-proxy_fcgi \
                         --disable-proxy_fdpass --disable-proxy_ftp --disable-proxy_hcheck \
-                        --disable-proxy_html --disable-proxy_http --disable-proxy_http2 \
+                        --disable-proxy_http --disable-proxy_http2 \
                         --disable-proxy_scgi --disable-proxy_uwsgi --disable-proxy_wstunnel
 endif
 
