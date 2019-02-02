@@ -106,7 +106,7 @@ define Package/apache2/Default
   SUBMENU:=Web Servers/Proxies
   TITLE:=The Apache 2 Web Server
   URL:=https://httpd.apache.org/
-  DEPENDS:=!apache
+  # DEPENDS:=!apache
 endef
 
 define Package/apache2/Default/description
