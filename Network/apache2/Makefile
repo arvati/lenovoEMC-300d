@@ -33,6 +33,8 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_APACHE2_LUA \
 	CONFIG_APACHE2_VHOST
 
+# http://httpd.apache.org/docs/2.4/mod/
+
 ADDITIONAL_MODULES:=
 ifeq ($(CONFIG_APACHE2_LUA),y)
   ADDITIONAL_MODULES += --enable-lua
@@ -180,13 +182,19 @@ define Build/Configure
 		--with-apr-util="$(STAGING_DIR)/usr/bin/apu-1-config" \
 		--with-pcre="$(STAGING_DIR)/usr/bin/pcre-config" \
 		$(ADDITIONAL_MODULES) \
+		–enable-dev \
 		--enable-http \
 		--with-crypto \
 		--with-sqlit3="$(STAGING_DIR)/usr" \
 		--with-openssl="$(STAGING_DIR)/usr" \
 		--enable-ssl \
 		--enable-proxy \
+		--enable-cgi \
+		--enable-so \
+		--enable-info	\
 		--enable-alias \
+		--enable-rewrite \
+		--enable-deflate \
 		--disable-md \
 		--disable-disk-cache \
 		--enable-maintainer-mode \
@@ -256,3 +264,6 @@ endef
 
 $(eval $(call BuildPackage,apache2))
 $(eval $(call BuildPackage,apache2-icons))
+
+# take a look at: https://dan.drydog.com/apache2php.html
+# for svn = http://forum.directadmin.com/showthread.php?t=47720
