@@ -19,7 +19,7 @@ config APACHE2_DAV
         bool
         prompt "Enable DAV"
         help
-                Enable Distributed Authoring and Versioning (WebDAV)
+                Enable Distributed Authoring and Versioning (WebDAV) \
                 functionality support and Filesystem provider.
         default y
 
